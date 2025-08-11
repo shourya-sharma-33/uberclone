@@ -3,6 +3,8 @@
 ## Overview
 This project is an Uber clone backend built with Node.js, Express, and MongoDB. It provides user registration, login, authentication, and profile management. The frontend is not implemented yet.
 
+It also supports captain (driver) registration and management, including vehicle details and authentication.
+
 ## Folder Structure
 
 - **Backend/**
@@ -15,6 +17,10 @@ This project is an Uber clone backend built with Node.js, Express, and MongoDB. 
 	- `models/blacklistToken.model.js`: Mongoose schema for blacklisted JWT tokens.
 	- `services/user.services.js`: User creation service.
 	- `middlewares/auth.middleware.js`: JWT authentication middleware.
+	- `routes/captain.routes.js`: Captain-related API routes.
+	- `controllers/captain.controllers.js`: Captain controller functions (register, etc).
+	- `models/captain.model.js`: Mongoose captain schema and methods.
+	- `services/captain.services.js`: Captain creation service.
 
 - **Frontend/**
 	- (Currently empty)
@@ -42,6 +48,26 @@ This project is an Uber clone backend built with Node.js, Express, and MongoDB. 
 
 ### Health Check
 - `GET /` — Returns "hello world" to verify server is running.
+
+### Captain Registration
+- `POST /captains/register`
+	- Body:
+		```json
+		{
+			"fullname": { "firstname": "Alex", "lastname": "Rider" },
+			"email": "alex@captain.com",
+			"password": "yourpassword",
+			"vehicle": {
+				"color": "Red",
+				"plate": "AB1234",
+				"model": "Toyota Prius",
+				"capacity": 4,
+				"vehicleType": "car"
+			}
+		}
+		```
+	- Validates email, first name (min 3 chars), password (min 6 chars), and all vehicle fields.
+	- Returns JWT token and captain object on success.
 
 ### User Registration
 - `POST /users/register`
@@ -83,18 +109,22 @@ This project is an Uber clone backend built with Node.js, Express, and MongoDB. 
 	- JWT tokens are generated and verified using `jsonwebtoken`.
 	- Tokens are stored in HTTP-only cookies for security.
 	- Blacklisted tokens are tracked in MongoDB (`blacklistToken.model.js`).
+	- Both users and captains have authentication flows and JWT tokens.
 
 - **Validation:**
 	- Uses `express-validator` for request body validation.
 	- Custom error messages for invalid input.
+	- Captain registration validates vehicle details and type.
 
 - **Password Security:**
 	- Passwords are hashed with bcrypt before storing.
 	- Password comparison uses bcrypt for login.
+	- Captain and user models both hash and compare passwords securely.
 
 - **Database:**
 	- MongoDB is used via Mongoose ODM.
 	- User schema enforces required fields and uniqueness.
+	- Captain schema enforces required fields, vehicle details, and uniqueness.
 
 ## Example Usage
 
@@ -103,6 +133,24 @@ Register a user:
 curl -X POST http://localhost:3000/users/register \
 	-H "Content-Type: application/json" \
 	-d '{"fullname": {"firstname": "Jane", "lastname": "Smith"}, "email": "jane@example.com", "password": "securepass"}'
+```
+
+Register a captain:
+```bash
+curl -X POST http://localhost:3000/captains/register \
+	-H "Content-Type: application/json" \
+	-d '{
+		"fullname": {"firstname": "Alex", "lastname": "Rider"},
+		"email": "alex@captain.com",
+		"password": "securepass",
+		"vehicle": {
+			"color": "Red",
+			"plate": "AB1234",
+			"model": "Toyota Prius",
+			"capacity": 4,
+			"vehicleType": "car"
+		}
+	}'
 ```
 
 Login:
@@ -129,6 +177,9 @@ curl -X GET http://localhost:3000/users/logout \
 - Add new backend features in the `Backend` folder.
 - Follow existing patterns for controllers, services, and models.
 - Update this README as the project evolves.
+
+---
+_For questions or issues, open an issue in this repository._
 
 ---
 _For questions or issues, open an issue in this repository._
