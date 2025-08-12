@@ -181,5 +181,3 @@ curl -X GET http://localhost:3000/users/logout \
 ---
 _For questions or issues, open an issue in this repository._
 
----
-_For questions or issues, open an issue in this repository._

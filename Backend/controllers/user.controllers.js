@@ -30,11 +30,12 @@ module.exports.registerUser = async(  req, res, next ) => {
     });
     
     const token = user.generateAuthToken();
-    console.log(token);
+    
     
     res.status(201).json({token, user})
 
 } 
+
 
 module.exports.loginUser = async ( req, res, next ) => {
     const errors = validationResult(req);
