@@ -132,7 +132,7 @@ It performs the following steps:
 4. Attaches the decoded user object to `req.user`.
 5. Calls `next()` if the user is authorized, or returns a 401 Unauthorized error otherwise.
 
-<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" width="500">
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
 
 
 #### captainUser Middleware
@@ -145,12 +145,24 @@ The `authCaptain` middleware authenticates captain based on their **Token**
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
 
+## Services
 
+### User Service
+`services/user.services.js` 
+#### `createUser`
+
+- takes `firstname`, `lastname`, `email`, `password`and saves them in database collection
+
+### Captain Service
+`services/user.services.js` 
+#### `createUser`
+
+- takes `firstname`, `lastname`, `email`, `password`, `color`,`plate`, `model`. `capacity`, `vehicleType` and saves them in database collection
 ## API Endpoints
 
 ### `/users`
 
-####  `/users/register`
+####  POST `/users/register`
 - Check if 
 -- Check if email has a valid format
 -- **Firstname** should be minimum 3 letters
@@ -227,14 +239,14 @@ The response contains an `errors` array, where each object has:
         {
             "type": "field",
             "value": "ra",
-            "msg": "write proper name ain nobody got 2 letter name",
+            "msg": "Fullname should be more than two letters",
             "path": "fullname.firstname",
             "location": "body"
         },
         {
             "type": "field",
             "value": "123",
-            "msg": "password bada rakho babygirl",
+            "msg": "Passsword should be more than 6 letters",
             "path": "password",
             "location": "body"
         }
@@ -262,3 +274,246 @@ If authentication or DB connection fails internally, this could be extended to r
     "message": "Internal Server Error"
 }
 ```
+####  POST `/users/login`
+- Check if 
+-- Check if email has a valid format
+-- **Password** must be minimum 6 letters
+- Run `userController.loginUser` controller
+##### `userController.loginUser`
+- Store validation results in errors object
+- Return if errors object is not empty
+- Extract `email`, `password` from `req.body`
+- Find `user` document from 	`user` collection in database including `password` because by default when we fetch `user` document `password` field is excluded, here we will include `password` to compare it with `password` from `req.body`
+- Compare `password` from hashed `password` in `user` document in database using `comparePasssword` method from `user` model
+- Generate token using `generateAuthToken` method in `user` method
+- store token in cookies
+- send responce status 200 with `token` and `user`
+
+### Request
+```json
+{
+"email"  :  "ramchandra@gmail.com",
+"password"  :  "123456789"
+}
+```
+### Responce (Happy Path)
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODljOWYwOWU2N2IwZGU2ZDU5NWU5OGIiLCJpYXQiOjE3NTUwOTY5NDksImV4cCI6MTc1NTE4MzM0OX0.Vv91litFq7oflrCghnZy0_InnFcRY1q0mJurYYaQGyc",
+    "user": {
+        "fullname": {
+            "firstname": "ram",
+            "lastname": "chandra"
+        },
+        "_id": "689c9f09e67b0de6d595e98b",
+        "email": "ramchandra@gmail.com",
+        "password": "$2b$10$h9fzTFAXCBwygxsRApJDBu/XYrjhToWQ/1XkwwZAnCqr8Vfi1BozO",
+        "__v": 0
+    }
+}
+```
+
+
+### Errors
+
+The `/users/login` endpoint can return the following error responses:
+
+----------
+
+#### **400 Bad Request – Validation Errors**
+
+Occurs when the request body fails validation rules defined via `express-validator`.
+
+**Response Format:**  
+The response contains an `errors` array, where each object includes:
+
+-   `msg`: The validation error message
+    
+-   `path`: The field that failed validation
+    
+-   `location`: The request location (e.g., `"body"`)
+    
+-   `value`: The value that failed validation
+    
+
+**Example:** Invalid email and too short password
+
+```
+{
+    "errors": [
+        {
+            "type": "field",
+            "value": "shourya@gmail",
+            "msg": "Invalid Email",
+            "path": "email",
+            "location": "body"
+        },
+        {
+            "type": "field",
+            "value": "123",
+            "msg": "password bada rakho babygirl",
+            "path": "password",
+            "location": "body"
+        }
+    ]
+}
+``` 
+
+----------
+
+#### **401 Unauthorized – Invalid Credentials**
+
+Occurs when the provided email or password does not match any user in the database.
+
+**Example:**
+
+`{  "message":  "invalid email or password"  }` 
+
+If the email exists but the password is incorrect, the system may also return:
+
+`{  "message":  "invalid email and password"  }` 
+
+----------
+
+#### **Possible Future Errors**
+
+If authentication or DB connection fails internally, this could be extended to return:
+
+`{  "message":  "Internal Server Error"  }`
+
+####  GET `/users/profile`
+- run `authMiddleware.authUser` 
+- run `userController.getUserProfile`
+##### `userController.getUserProfile`
+- fetch `req.user` and send in response
+
+
+### Request
+No Request is needed
+
+### Responce (Happy Path)
+```json
+{
+"fullname":  {
+"firstname":  "ram",
+"lastname":  "chandra"
+},
+"_id":  "689c9f09e67b0de6d595e98b",
+"email":  "ramchandra@gmail.com",
+"__v":  0
+}
+```
+
+
+### Errors
+
+The `/users/profile` endpoint can return the following error responses:
+
+----------
+
+#### **401 Unauthorized – Missing Token**
+
+Occurs when no authentication token is provided in cookies or the `Authorization` header.
+
+**Example:**
+
+`{  "message":  "Unauthorized"  }` 
+
+----------
+
+#### **401 Unauthorized – Blacklisted Token**
+
+Occurs when the provided token exists in the blacklist, indicating it has been revoked or logged out.
+
+**Example:**
+
+`{  "message":  "Unauthorized "  }` 
+
+----------
+
+#### **401 Unauthorized – Invalid or Expired Token**
+
+Occurs when token verification fails (e.g., signature mismatch, token expired, or invalid token format).
+
+**Example:**
+
+`{  "message":  "Unauthorized"  }` 
+
+----------
+
+#### **Possible Future Errors**
+
+If database connection fails during token validation or user lookup, the error could be extended to return:
+
+`{  "message":  "Internal Server Error"  }`
+
+
+####  GET `/users/logout`
+- run `authMiddleware.authUser` 
+- run `userController.logoutUser`
+##### `userController.logoutUser`
+- Clear Cookie
+- Store `token` in `blacklistTokenModel` so it cant be reused
+- in response send`logged out` 
+
+### Request
+No Request is needed
+
+### Response (Happy Path)
+```json
+{
+"message":  "logged out"
+}
+```
+
+###  Now if we try to login
+
+```json
+{
+"message":  "Unauthorized "
+}
+```
+
+----------
+
+### Errors
+
+The `/users/logout` endpoint can return the following error responses:
+
+----------
+
+#### **401 Unauthorized – Missing Token**
+
+Occurs when no authentication token is provided in cookies or the `Authorization` header.
+
+**Example:**
+
+`{  "message":  "Unauthorized"  }` 
+
+----------
+
+#### **401 Unauthorized – Blacklisted Token**
+
+Occurs when the provided token exists in the blacklist, meaning it has already been revoked or the user is already logged out.
+
+**Example:**
+
+`{  "message":  "Unauthorized "  }` 
+
+----------
+
+#### **401 Unauthorized – Invalid or Expired Token**
+
+Occurs when token verification fails due to signature mismatch, expiration, or malformed token.
+
+**Example:**
+
+`{  "message":  "Unauthorized"  }` 
+
+----------
+
+#### **Possible Future Errors**
+
+If database connection fails during token validation or blacklist creation, the error could be extended to return:
+
+`{  "message":  "Internal Server Error"  }`

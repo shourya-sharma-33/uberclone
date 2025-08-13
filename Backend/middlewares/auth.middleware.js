@@ -11,7 +11,7 @@ module.exports.authUser = async( req, res, next ) => {
         return res.status(401).json({ message : 'Unauthorized' })
     }
     
-    const isBlackListed = await isBlackListed.findOne({ token : token });
+    const isBlackListed = await blacklistTokenModel.findOne({ token : token });
 
     if (isBlackListed) {
         return res.status(401).json({ message : "Unauthorized " })
@@ -48,4 +48,5 @@ module.exports.authCaptain = async ( req, res, next ) => {
     } catch (error) {
         res.status(401).json({message : "unauthorizd47"})
     }
-} 
+}  
+
