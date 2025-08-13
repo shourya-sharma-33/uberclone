@@ -132,7 +132,7 @@ It performs the following steps:
 4. Attaches the decoded user object to `req.user`.
 5. Calls `next()` if the user is authorized, or returns a 401 Unauthorized error otherwise.
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
+<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" width="500">
 
 
 #### captainUser Middleware
