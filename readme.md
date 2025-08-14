@@ -1,3 +1,4 @@
+
 # Uber Clone (Under Progress)
 
 Hello! I am Shourya Sharma and This is a Full Stack Uber Clone App made in MERN Stack (MongoDB, Express, React and Node.js)
@@ -322,11 +323,8 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 ###  POST `/users/register`
 
 - Check if
-
 -- Check if email has a valid format
-
 -- **Firstname** should be minimum 3 letters
-
 -- **Password** must be minimum 6 letters
 
 - Run `userController.registerUser` controller
@@ -485,11 +483,8 @@ If authentication or DB connection fails internally, this could be extended to r
 ###  POST `/users/login`
 
 - Check if
-
 -- Check if email has a valid format
-
 -- **Password** must be minimum 6 letters
-
 - Run `userController.loginUser` controller
 
 ####  `userController.loginUser`
@@ -638,26 +633,26 @@ If authentication or DB connection fails internally, this could be extended to r
 
   
 
-#  GET `/users/profile`
+###  GET `/users/profile`
 
 - run `authMiddleware.authUser`
 
 - run `userController.getUserProfile`
 
-##  `userController.getUserProfile`
+####  `userController.getUserProfile`
 
 - fetch `req.user` and send in response
 
   
   
 
-##  Request
+####  Request
 
 No Request is needed
 
   
 
-##  Responce (Happy Path)
+####  Responce (Happy Path)
 
 ```json
 
@@ -684,7 +679,7 @@ No Request is needed
   
   
 
-##  Errors
+####  Errors
 
   
 
@@ -694,7 +689,7 @@ The `/users/profile` endpoint can return the following error responses:
   
   
 
-####  **401 Unauthorized – Missing Token**
+ **401 Unauthorized – Missing Token**
 
   
 
@@ -712,7 +707,7 @@ Occurs when no authentication token is provided in cookies or the `Authorization
   
   
 
-####  **401 Unauthorized – Blacklisted Token**
+  **401 Unauthorized – Blacklisted Token**
 
   
 
@@ -729,8 +724,7 @@ Occurs when the provided token exists in the blacklist, indicating it has been r
   
   
   
-
-####  **401 Unauthorized – Invalid or Expired Token**
+  **401 Unauthorized – Invalid or Expired Token**
 
   
 
@@ -748,7 +742,7 @@ Occurs when token verification fails (e.g., signature mismatch, token expired, o
   
   
 
-####  **Possible Future Errors**
+**Possible Future Errors**
 
   
 
@@ -761,13 +755,13 @@ If database connection fails during token validation or user lookup, the error c
   
   
 
-# GET `/users/logout`
+### GET `/users/logout`
 
 - run `authMiddleware.authUser`
 
 - run `userController.logoutUser`
 
-## `userController.logoutUser`
+#### `userController.logoutUser`
 
 - Clear Cookie
 
@@ -777,13 +771,13 @@ If database connection fails during token validation or user lookup, the error c
 
   
 
-##  Request
+### Request
 
 No Request is needed
 
   
 
-##  Response (Happy Path)
+###  Response (Happy Path)
 
 ```json
 
@@ -797,7 +791,7 @@ No Request is needed
 
   
 
-##  Now if we try to login
+####  Now if we try to login
 
   
 
@@ -815,7 +809,7 @@ No Request is needed
   
   
 
-##  Errors
+###  Errors
 
   
 
@@ -824,7 +818,7 @@ The `/users/logout` endpoint can return the following error responses:
   
   
 
-####  **401 Unauthorized – Missing Token**
+ **401 Unauthorized – Missing Token**
 
   
 
@@ -840,7 +834,7 @@ Occurs when no authentication token is provided in cookies or the `Authorization
 
   
 
-####  **401 Unauthorized – Blacklisted Token**
+ **401 Unauthorized – Blacklisted Token**
 
   
 
@@ -858,7 +852,7 @@ Occurs when the provided token exists in the blacklist, meaning it has already b
   
   
 
-####  **401 Unauthorized – Invalid or Expired Token**
+**401 Unauthorized – Invalid or Expired Token**
 
   
 
@@ -875,7 +869,7 @@ Occurs when token verification fails due to signature mismatch, expiration, or m
   
   
 
-####  **Possible Future Errors**
+  **Possible Future Errors**
 
   
 
