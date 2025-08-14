@@ -246,31 +246,16 @@ The `authCaptain` middleware authenticates captain based on their **Token**
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
 
   
+# authCaptain Middleware – Error Responses
 
-**Errors – `authCaptain` Middleware**
-The `authCaptain` middleware can return the following error responses:
+This document describes the possible error responses returned by the `authCaptain` middleware.
 
-**401 Unauthorized – Missing Token**
-Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
-
-**Example:**
-`{ "message": "Unauthorized33" }`
-
-**401 Unauthorized – Blacklisted Token**
-Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
-
-**Example:**
-`{ "message": "Unauthorized39" }`
-
-**401 Unauthorized – Invalid or Expired Token**
-Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
-**Example:**
-`{ "message": "unauthorizd47" }`
-
-**Possible Future Errors**
-If database queries fail (e.g., captain not found due to a DB outage), this could be extended to return:
-`{ "message": "Internal Server Error" }`
-
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No valid authentication token found in `cookies.token` or `Authorization` header. | `{ "message": "Unauthorized33" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Token exists in the `blacklistToken` collection (e.g., captain logged out). | `{ "message": "Unauthorized39" }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | JWT signature is invalid, token has expired, or cannot be decoded with `process.env.JWT_SECRET`. | `{ "message": "unauthorizd47" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Captain lookup fails (e.g., DB outage or captain not found). | `{ "message": "Internal Server Error" }` |
 ------------
 
 ##  Services
@@ -371,101 +356,15 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 }
 ```
 
-  
+  # /users/register – Error Responses
 
-####  Errors
+This document lists the possible error responses returned by the `/users/register` endpoint.
 
-  
-
-The `/users/register` endpoint can return the following error responses:
-
-  
-**400 Bad Request – Validation Errors**
-
-  
-
-Occurs when request body fails validation rules set via `express-validator`.
-
-The response contains an `errors` array, where each object has:
-
-  
-
--  `msg`: The validation error message
-
--  `param`: The field that failed validation
-
--  `location`: The request location (e.g., `"body"`)
-
-  
-
-**Example: Invalid email, too short firstname, short password**
-
-  
-
-```
-
-{
-"errors": [
-{
-"type": "field",
-"value": "shourya@gmail",
-"msg": "Invalid Email",
-"path": "email",
-"location": "body"
-},
-{
-"type": "field",
-"value": "ra",
-"msg": "Fullname should be more than two letters",
-"path": "fullname.firstname",
-"location": "body"
-},
-{
-"type": "field",
-"value": "123",
-"msg": "Passsword should be more than 6 letters",
-"path": "password",
-"location": "body"
-}
-]
-}
-```
-
-  
-
- **400 Bad Request – User Already Exists**
-
-  
-
-Occurs when a user with the same email is already in the database.
-
-**Example:**
-
-  
-
-```
-{
-"message": "user already exists"
-}
-```
-
-  
-
-  **Possible Future Errors**
-
-  
-
-If authentication or DB connection fails internally, this could be extended to return:
-
-  
-
-```
-
-{
-"message": "Internal Server Error"
-}
-
-```
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **400 Bad Request** | **Validation Errors** | The request body fails validation rules set via `express-validator`. The response contains an `errors` array, where each object includes: <br> - `msg`: error message <br> - `param`: field that failed validation <br> - `location`: request data location (e.g., `"body"`). | `````` |
+| **400 Bad Request** | **User Already Exists** | A user with the provided email already exists in the database. | `````` |
+| **500 Internal Server Error** *(Future Possibility)* | **Server/DB Failure** | An internal authentication or database connection error occurred. | `````` |
 
 ###  POST `/users/login`
 
