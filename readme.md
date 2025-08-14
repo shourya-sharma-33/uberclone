@@ -211,7 +211,7 @@ It performs the following steps:
 
   
 
-<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
+<img src="Flowcharts\11.svg" alt="Example Image" style="width:100%;">
 
 ##### authUser Middleware – Error Responses
 
@@ -243,8 +243,7 @@ The `authCaptain` middleware authenticates captain based on their **Token**
 
   
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
-
+<img src="Flowcharts\22.svg" alt="Example Image" style="width:100%;">
   
 ##### authCaptain Middleware – Error Responses
 
@@ -323,6 +322,7 @@ This document describes the possible error responses returned by the `authCaptai
 
 - send response with `token` and `user` document
 
+<img src="Flowcharts\33.svg" alt="Example Image" style="width:100%;">
   
 
 ####  Request
@@ -392,7 +392,7 @@ This document lists the possible error responses returned by the `/users/registe
 
 - send responce status 200 with `token` and `user`
 
-  
+  <img src="Flowcharts\44.svg" alt="Example Image" style="width:100%;">
 
 ####  Request
 
@@ -447,7 +447,7 @@ This document lists the possible error responses returned by the `/users/login` 
 - fetch `req.user` and send in response
 
   
-  
+  <img src="Flowcharts\55.svg" alt="Example Image" style="width:100%;">
 
 ####  Request
 
@@ -498,7 +498,7 @@ This document lists the possible error responses returned by the `/users/profile
 
 - in response send`logged out`
 
-  
+  <img src="Flowcharts\66.svg" alt="Example Image" style="width:100%;">
 
 #### Request
 
@@ -579,7 +579,7 @@ This document lists the possible error responses returned by the `/users/logout`
 
 - send response with `token` and `captain` document
 
-  
+  <img src="Flowcharts\77.svg" alt="Example Image" style="width:100%;">
 
 ####  Request
 
@@ -663,7 +663,7 @@ This document lists the possible error responses returned by the `/users/registe
 
 - send responce status 200 with `token` and `captain`
 
-  
+  <img src="Flowcharts\88.svg" alt="Example Image" style="width:100%;">
 
 ####  Request
 
@@ -726,7 +726,7 @@ This document lists the possible error responses returned by the `/users/login` 
 - fetch `req.user` and send in response
 
   
-  
+  <img src="Flowcharts\99.svg" alt="Example Image" style="width:100%;">
 
 ####  Request
 
@@ -788,6 +788,7 @@ This document lists the possible error responses returned by the `/users/profile
 - in response send`logged out`
 
   
+<img src="Flowcharts\1010.svg" alt="Example Image" style="width:100%;">
 
 #### Request
 
