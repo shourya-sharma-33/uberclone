@@ -191,7 +191,7 @@ An extra layer of security to prevent users from logging in with old or compromi
 
 `middlewares/auth.middleware.js` : contains authentication based middlwares
   
-
+------------
 ####  authUser Middleware
 
 The `authUser` middleware is responsible for authenticating a user based on their **JWT token**.
@@ -210,81 +210,35 @@ It performs the following steps:
 
   
 
-<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
+<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;"
 
-  
-
-#####  **Errors – `authUser` Middleware**
-
-  
-
+**Errors – `authUser` Middleware**
 The `authUser` middleware can return the following error responses:
 
-  
-
-#####  **401 Unauthorized – Missing Token**
-
-  
-
+**401 Unauthorized – Missing Token**
 Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
 
-  
-
 **Example:**
-
-  
-
 `{ "message": "Unauthorized" }`
 
-  
-
-#####  **401 Unauthorized – Blacklisted Token**
-
-  
-
+ **401 Unauthorized – Blacklisted Token**
 Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
 
-  
-
 **Example:**
-
-  
-
 `{ "message": "Unauthorized " }`
-
-  
-  
-
-#####  **401 Unauthorized – Invalid or Expired Token**
-
-  
-
+**401 Unauthorized – Invalid or Expired Token**
 Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
 
-  
-
 **Example:**
-
-  
-
 `{ "message": "Unauthorized" }`
 
-  
-  
-
-#####  **Possible Future Errors**
-
-  
-
+**Possible Future Errors**
 If database queries fail (e.g., user not found due to a DB outage), this could be extended to return:
-
-  
-
 `{ "message": "Internal Server Error" }`
 
-  
+------------
 
-###  captainUser Middleware
+#### captainUser Middleware
 
 
 The `authCaptain` middleware authenticates captain based on their **Token**
@@ -305,77 +259,31 @@ The `authCaptain` middleware authenticates captain based on their **Token**
 
   
 
-####   **Errors – `authCaptain` Middleware**
-
-  
-
+**Errors – `authCaptain` Middleware**
 The `authCaptain` middleware can return the following error responses:
 
-  
-
-#####  **401 Unauthorized – Missing Token**
-
-  
-
+**401 Unauthorized – Missing Token**
 Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
 
-  
-
 **Example:**
-
-  
-
 `{ "message": "Unauthorized33" }`
 
-  
-  
-  
-
-#####  **401 Unauthorized – Blacklisted Token**
-
-  
-
+**401 Unauthorized – Blacklisted Token**
 Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
 
-  
-
 **Example:**
-
-  
-
 `{ "message": "Unauthorized39" }`
 
-  
-  
-
-#####  **401 Unauthorized – Invalid or Expired Token**
-
-  
-
+**401 Unauthorized – Invalid or Expired Token**
 Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
-
-  
-
 **Example:**
-
-  
-
 `{ "message": "unauthorizd47" }`
 
-  
-  
-
-#####  **Possible Future Errors**
-
-  
-
+**Possible Future Errors**
 If database queries fail (e.g., captain not found due to a DB outage), this could be extended to return:
-
-  
-
 `{ "message": "Internal Server Error" }`
 
-  
+------------
 
 #  Services
 
