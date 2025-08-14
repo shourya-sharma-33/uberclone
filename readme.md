@@ -212,7 +212,7 @@ It performs the following steps:
 
 <img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
 
-##### **Errors – `authUser` Middleware**
+**Errors – `authUser` Middleware**
 The `authUser` middleware can return the following error responses:
 
 **401 Unauthorized – Missing Token**
@@ -285,15 +285,15 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
 ------------
 
-#  Services
+##  Services
 
   
 
-##  User Service
+###  User Service
 
 `services/user.services.js`
 
-###  `createUser`
+####  `createUser`
 
   
 
@@ -301,17 +301,17 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-##  Captain Service
+### Captain Service
 
 `services/user.services.js`
 
-###  `createUser`
+####  `createCaptain`
 
   
 
 - takes `firstname`, `lastname`, `email`, `password`, `color`,`plate`, `model`. `capacity`, `vehicleType` and saves them in database collection
 
-#  API Endpoints
+##  API Endpoints
 
 ------------
 
