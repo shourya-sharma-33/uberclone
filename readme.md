@@ -1,3 +1,4 @@
+
 # Uber Clone (Under Progress)
 
 Hello! I am Shourya Sharma and This is a Full Stack Uber Clone App made in MERN Stack (MongoDB, Express, React and Node.js)
@@ -212,29 +213,16 @@ It performs the following steps:
 
 <img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
 
-**Errors – `authUser` Middleware**
-The `authUser` middleware can return the following error responses:
+##### authUser Middleware – Error Responses
 
-**401 Unauthorized – Missing Token**
-Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
+This document describes the possible error responses returned by the `authUser` middleware.
 
-**Example:**
-`{ "message": "Unauthorized" }`
-
- **401 Unauthorized – Blacklisted Token**
-Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
-
-**Example:**
-`{ "message": "Unauthorized " }`
-**401 Unauthorized – Invalid or Expired Token**
-Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
-
-**Example:**
-`{ "message": "Unauthorized" }`
-
-**Possible Future Errors**
-If database queries fail (e.g., user not found due to a DB outage), this could be extended to return:
-`{ "message": "Internal Server Error" }`
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No valid authentication token found in `cookies.token` or `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Token exists in the `blacklistToken` collection (e.g., user logged out). | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | JWT signature is invalid, token has expired, or cannot be decoded with `process.env.JWT_SECRET`. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | User lookup fails (e.g., DB outage or user not found). | `{ "message": "Internal Server Error" }` |
 
 ------------
 
@@ -258,31 +246,16 @@ The `authCaptain` middleware authenticates captain based on their **Token**
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
 
   
+##### authCaptain Middleware – Error Responses
 
-**Errors – `authCaptain` Middleware**
-The `authCaptain` middleware can return the following error responses:
+This document describes the possible error responses returned by the `authCaptain` middleware.
 
-**401 Unauthorized – Missing Token**
-Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
-
-**Example:**
-`{ "message": "Unauthorized33" }`
-
-**401 Unauthorized – Blacklisted Token**
-Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
-
-**Example:**
-`{ "message": "Unauthorized39" }`
-
-**401 Unauthorized – Invalid or Expired Token**
-Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
-**Example:**
-`{ "message": "unauthorizd47" }`
-
-**Possible Future Errors**
-If database queries fail (e.g., captain not found due to a DB outage), this could be extended to return:
-`{ "message": "Internal Server Error" }`
-
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No valid authentication token found in `cookies.token` or `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Token exists in the `blacklistToken` collection (e.g., captain logged out). | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | JWT signature is invalid, token has expired, or cannot be decoded with `process.env.JWT_SECRET`. | `{ "message": "unauthorizd" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Captain lookup fails (e.g., DB outage or captain not found). | `{ "message": "Internal Server Error" }` |
 ------------
 
 ##  Services
@@ -301,7 +274,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-### Captain Service
+#### Captain Service
 
 `services/user.services.js`
 
@@ -319,14 +292,11 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
 ------------
 
-####  POST `/users/register`
+###  POST `/users/register`
 
 - Check if
-
 -- Check if email has a valid format
-
 -- **Firstname** should be minimum 3 letters
-
 -- **Password** must be minimum 6 letters
 
 - Run `userController.registerUser` controller
@@ -371,183 +341,494 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 ####  Responce (Happy Path)
 
 ```json
-
-# Uber Clone (Under Progress)
-
-## Introduction
-Hello! I am Shourya Sharma. This is a Full Stack Uber Clone App made in the MERN Stack (MongoDB, Express, React, Node.js).
-
-> _Note from the Developer:_
-> This project, including its codebase and documentation, has been created entirely through my own effort without the use of AI generated code or automated writing tools. Every decision, implementation, and explanation here reflects my own learning process and hands-on work.
-
----
-
-## Table of Contents
-1. [Folder Structure](#folder-structure)
-2. [Setup Instructions](#setup-instructions)
-3. [Database Models](#database-models)
-4. [Middlewares](#middlewares)
-5. [Services](#services)
-6. [API Endpoints](#api-endpoints)
-
----
-
-## Folder Structure
-
-**Backend/**
-- `app.js`: Main Express app setup and middleware configuration
-- `server.js`: HTTP server entry point
-- `db/db.js`: MongoDB connection logic
-- `models/`: Mongoose schemas for User, Captain, BlacklistedToken
-- `routes/`: User and Captain API routes
-- `controllers/`: User and Captain controller functions
-- `middlewares/`: JWT authentication middleware
-- `services/`: User and Captain creation services
-
-**Frontend/**
-- (Currently empty)
-
----
-
-## Setup Instructions
-1. Install dependencies:
-   ```powershell
-   cd Backend
-   npm install
-   ```
-2. Create a `.env` file in the `Backend` folder with:
-   ```env
-   DB_CONNECT=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   NODE_ENV=development
-   PORT=3000
-   ```
-3. Start the server:
-   ```powershell
-   node server.js
-   ```
-
----
-
-## Database Models
-
-### User Model
-| Field                | Type   | Required | Details                                         |
-|----------------------|--------|----------|-------------------------------------------------|
-| `fullname.firstname` | String | Yes      | Min length 3 characters.                        |
-| `fullname.lastname`  | String | No       | Min length 3 characters if provided.            |
-| `email`              | String | Yes      | Unique, min length 5 characters.                |
-| `password`           | String | Yes      | Hashed before storage, not returned in queries. |
-| `socketId`           | String | No       | Stores user’s WebSocket connection ID.          |
-
-**Custom Methods:**
-- `generateAuthToken()` → Creates a JWT token with 24h expiry
-- `comparePassword(password)` → Compares input password with hashed password
-- `hashPassword(password)` → Returns a bcrypt hash of the password
-
-### Captain Model
-| Field                 | Type   | Required | Details                                                    |
-|-----------------------|--------|----------|------------------------------------------------------------|
-| `fullname.firstname`  | String | Yes      | Min length 3 characters.                                   |
-| `fullname.lastname`   | String | No       | Min length 3 characters if provided.                       |
-| `email`               | String | Yes      | Unique, lowercase, must match a valid email format.        |
-| `password`            | String | Yes      | Hashed before storage, excluded from query results.        |
-| `socketId`            | String | No       | Stores WebSocket connection ID.                            |
-| `status`              | String | No       | Enum: `active`, `inactive` (default: `inactive`).          |
-| `vehicle.color`       | String | Yes      | Min length 3 characters.                                   |
-| `vehicle.plate`       | String | Yes      | Min length 2 characters.                                   |
-| `vehicle.model`       | String | Yes      | Min length 3 characters.                                   |
-| `vehicle.capacity`    | Number | Yes      | Minimum value: 1.                                          |
-| `vehicle.vehicleType` | String | Yes      | Enum: `car`, `motocycle`, `auto`.                          |
-| `location.latitude`   | Number | No       | Current latitude of the captain.                           |
-| `location.longitude`  | Number | No       | Current longitude of the captain.                          |
-
-**Custom Methods:**
-- `generateAuthToken()` → Creates a JWT token with 24h expiry for authentication
-- `comparePassword(password)` → Compares plain password with the stored hashed password
-- `hashPassword(password)` → Returns bcrypt hash of the password
-
-### Blacklisted Token
-| Field      | Type   | Required | Details                          |
-|------------|--------|----------|----------------------------------|
-| `token`    | String | Yes      | Stores all past tokens.          |
-| `createdAt`| Date   | Yes      | Default is the creation date.    |
-
----
-
-## Middlewares
-
-### Authentication Middlewares
-`middlewares/auth.middleware.js` : contains authentication based middlewares
-
-#### authUser Middleware
-Authenticates a user based on their JWT token (from cookies or Authorization header), checks blacklist, verifies JWT, attaches user to `req.user`.
-
-#### authCaptain Middleware
-Authenticates a captain based on their JWT token (from cookies or Authorization header), checks blacklist, verifies JWT, attaches captain to `req.captain`.
-
----
-
-## Services
-
-### User Service
-`services/user.services.js` — `createUser`: takes `firstname`, `lastname`, `email`, `password` and saves them in the database
-
-### Captain Service
-`services/captain.services.js` — `createCaptain`: takes `firstname`, `lastname`, `email`, `password`, `color`, `plate`, `model`, `capacity`, `vehicleType` and saves them in the database
-
----
-
-## API Endpoints
-
-### User Endpoints
-- `POST /users/register` — Register a new user
-- `POST /users/login` — Login as a user
-- `GET /users/profile` — Get user profile (auth required)
-- `GET /users/logout` — Logout user (auth required)
-
-### Captain Endpoints
-- `POST /captain/register` — Register a new captain
-- `POST /captain/login` — Login as a captain
-- `GET /captain/profile` — Get captain profile (auth required)
-- `GET /captain/logout` — Logout captain (auth required)
-
----
-
-## Example Requests
-
-### Register User
-```json
 {
-  "fullname": { "firstname": "shourya", "lastname": "sharma" },
-  "email": "shourya@gmail.com",
-  "password": "123456789"
-}
-```
-
-### Register Captain
-```json
-{
-  "fullname": { "firstname": "meowfirstname", "lastname": "meowlastname" },
-  "email": "meow@captain.com",
-  "password": "1234567890",
-  "vehicle": {
-    "color": "pink",
-    "plate": "pink",
-    "model": "pink",
-    "capacity": 2,
-    "vehicleType": "car"
-  }
-}
-```
-
----
-
-## Error Handling
-All endpoints return clear error messages for validation, authentication, and server errors. See endpoint sections above for examples.
-
----
-
-## License
-MIT
+"token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODljOWYwOWU2N2IwZGU2ZDU5NWU5OGIiLCJpYXQiOjE3NTUwOTQ3OTMsImV4cCI6MTc1NTE4MTE5M30.0tdlvGgX1MVpjaeacXYC-vYwgwNUbDJjFY_4XNlTxw4",
+"user":  {
+"fullname":  {
+"firstname":  "ram",
+"lastname":  "chandra"
+},
+"email":  "ramchandra@gmail.com",
+"password":  "$2b$10$h9fzTFAXCBwygxsRApJDBu/XYrjhToWQ/1XkwwZAnCqr8Vfi1BozO",
+"_id":  "689c9f09e67b0de6d595e98b",
 "__v":  0
+}
+}
+```
+
+  #### /users/register – Error Responses
+
+This document lists the possible error responses returned by the `/users/register` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **400 Bad Request** | **Validation Errors** | The request body fails validation rules set via `express-validator`. The response contains an `errors` array, where each object includes: <br> - `msg`: error message <br> - `param`: field that failed validation <br> - `location`: request data location (e.g., `"body"`). | `{ errors : errors.array() }` |
+| **400 Bad Request** | **User Already Exists** | A user with the provided email already exists in the database. | `user already exists` |
+| **500 Internal Server Error** *(Future Possibility)* | **Server/DB Failure** | An internal authentication or database connection error occurred. | `internal server error` |
+
+
+###  POST `/users/login`
+
+- Check if
+-- Check if email has a valid format
+-- **Password** must be minimum 6 letters
+- Run `userController.loginUser` controller
+
+####  `userController.loginUser`
+
+- Store validation results in errors object
+
+- Return if errors object is not empty
+
+- Extract `email`, `password` from `req.body`
+
+- Find `user` document from `user` collection in database including `password` because by default when we fetch `user` document `password` field is excluded, here we will include `password` to compare it with `password` from `req.body`
+
+- Compare `password` from hashed `password` in `user` document in database using `comparePasssword` method from `user` model
+
+- Generate token using `generateAuthToken` method in `user` method
+
+- store token in cookies
+
+- send responce status 200 with `token` and `user`
+
+  
+
+####  Request
+
+```json
+{
+"email"  :  "ramchandra@gmail.com",
+"password"  :  "123456789"
+}
+```
+
+####  Responce (Happy Path)
+
+```json
+{
+"token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODljOWYwOWU2N2IwZGU2ZDU5NWU5OGIiLCJpYXQiOjE3NTUwOTY5NDksImV4cCI6MTc1NTE4MzM0OX0.Vv91litFq7oflrCghnZy0_InnFcRY1q0mJurYYaQGyc",
+"user":  {
+"fullname":  {
+"firstname":  "ram",
+"lastname":  "chandra"
+},
+"_id":  "689c9f09e67b0de6d595e98b",
+"email":  "ramchandra@gmail.com",
+"password":  "$2b$10$h9fzTFAXCBwygxsRApJDBu/XYrjhToWQ/1XkwwZAnCqr8Vfi1BozO",
+"__v":  0
+}
+}
+```
+
+  
+  
+
+
+#### /users/login – Error Responses
+
+This document lists the possible error responses returned by the `/users/login` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **400 Bad Request** | **Validation Errors** | The request body fails validation rules defined via `express-validator`. The response contains an `errors` array, where each object includes:<br> - `msg`: The validation error message<br> - `path`: The field that failed validation<br> - `location`: The request location (e.g., `"body"`)<br> - `value`: The value that failed validation. | `{ errors : errors.array() }` |
+| **401 Unauthorized** | **Invalid Credentials** | Occurs when the provided email or password does not match any user in the database. If the email exists but the password is wrong, a slightly different message may be returned. | `invalid email and password` |
+| **500 Internal Server Error** *(Future Possibility)* | **Server/DB Failure** | An internal authentication or database connection error occurred. | `internal server error`|
+
+
+###  GET `/users/profile`
+
+- run `authMiddleware.authUser`
+
+- run `userController.getUserProfile`
+
+####  `userController.getUserProfile`
+
+- fetch `req.user` and send in response
+
+  
+  
+
+####  Request
+
+No Request is needed
+
+  
+
+####  Responce (Happy Path)
+
+```json
+{
+  "fullname":  {
+    "firstname":  "ram",
+    "lastname":  "chandra"
+},
+  "_id":  "689c9f09e67b0de6d595e98b",
+  "email":  "ramchandra@gmail.com",
+  "__v":  0
+}
+```
+
+  
+  
+
+#### /users/profile – Error Responses
+
+This document lists the possible error responses returned by the `/users/profile` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No authentication token provided in cookies or the `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Provided token exists in the blacklist, indicating it has been revoked or logged out. | `{ "message": "Unauthorized " }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | Token signature mismatch, token expired, or invalid token format. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Database connection error occurs during token validation or user lookup. | `{ "message": "Internal Server Error" }` |
+
+
+### GET `/users/logout`
+
+- run `authMiddleware.authUser`
+
+- run `userController.logoutUser`
+
+#### `userController.logoutUser`
+
+- Clear Cookie
+
+- Store `token` in `blacklistTokenModel` so it cant be reused
+
+- in response send`logged out`
+
+  
+
+#### Request
+
+No Request is needed
+
+  
+
+####  Response (Happy Path)
+
+```json
+{
+"message":  "logged out"
+}
+```
+
+  
+
+####  Now if we try to login
+
+  
+
+```json
+{
+  "message":  "Unauthorized "
+}
+```
+
+  
+  
+  
+
+#### /users/logout – Error Responses
+
+This document lists the possible error responses returned by the `/users/logout` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No authentication token provided in cookies or the `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Provided token exists in the blacklist, meaning it has already been revoked or the user is already logged out. | `{ "message": "Unauthorized " }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | Token signature mismatch, token expired, or malformed token. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Database error during token validation or blacklist creation. | `{ "message": "Internal Server Error" }` |
+
+------------
+
+###  `/captain`
+
+------------
+
+###  POST `/captain/register`
+
+- Check if
+-- Check if email has a valid format
+-- **Firstname** should be minimum 3 letters
+-- **Password** must be minimum 6 letters
+-- `vehicle` information should follow the schema
+
+- Run `captainController.registerCaptain` controller
+
+  
+
+####  `captainController.registerCaptain`
+
+- Store validation results in errors object
+
+- Return if errors object is not empty
+
+- Extract `fullname`, `email`, `password`, `vehicle from `req.body
+
+- Find `captain` document from `captain` collection in database
+
+- if `captain` exist then return with message `captain already exists`
+
+- hash password using `hashPassword` method in captain model
+
+- Save `captain` in database using `createCreate` service
+
+- Generate a token using `generateAuthToken` method in captain model
+
+- send response with `token` and `captain` document
+
+  
+
+####  Request
+
+```json
+{
+    "fullname" : {
+        "firstname" : "ram",
+        "lastname" : "chandra"
+    },
+    "email" : "ram@captain.com",
+    "password" : "1234567890",
+    "vehicle" : {
+        "color" : "pink",
+        "plate" : "pink",
+        "model" : "pink",
+        "capacity" : 2,
+        "vehicleType" : "car"
+    }
+}
+```
+
+####  Responce (Happy Path)
+
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODlkZjRhNWMzODg5MjNkYjYzZGFlZjEiLCJpYXQiOjE3NTUxODIyNDUsImV4cCI6MTc1NTI2ODY0NX0.waEO43ACPuKN0PAXhqjsiVLohFbwPidhR7-kIfsrstQ",
+    "captain": {
+        "fullname": {
+            "firstname": "ram",
+            "lastname": "chandra"
+        },
+        "email": "ram@captain.com",
+        "password": "$2b$10$7VQG/px6u1Wobvk5mKjUuuWUOMdJtUncfkYSAoQApslXPiIgJ8gQa",
+        "status": "inactive",
+        "vehicle": {
+            "color": "pink",
+            "plate": "pink",
+            "model": "pink",
+            "capacity": 2,
+            "vehicleType": "car"
+        },
+        "_id": "689df4a5c388923db63daef1",
+        "__v": 0
+    }
+}
+```
+
+  #### /users/register – Error Responses
+
+This document lists the possible error responses returned by the `/users/register` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **400 Bad Request** | **Validation Errors** | The request body fails validation rules set via `express-validator`. The response contains an `errors` array, where each object includes: <br> - `msg`: error message <br> - `param`: field that failed validation <br> - `location`: request data location (e.g., `"body"`). | `{ errors : errors.array() }` |
+| **400 Bad Request** | **User Already Exists** | A user with the provided email already exists in the database. | `user already exists` |
+| **500 Internal Server Error** *(Future Possibility)* | **Server/DB Failure** | An internal authentication or database connection error occurred. | `internal server error` |
+
+
+###  POST `/captain/login`
+
+- Check if
+-- Check if email has a valid format
+-- **Password** must be minimum 6 letters
+- Run `captainController.loginCaptain` controller
+
+####  `captainController.loginCaptain`
+
+- Store validation results in errors object
+
+- Return if errors object is not empty
+
+- Extract `email`, `password` from `req.body`
+
+- Find `captain` document from `captain` collection in database including `password` because by default when we fetch `captain` document `password` field is excluded, here we will include `password` to compare it with `password` from `req.body`
+
+- Compare `password` from hashed `password` in `captain` document in database using `comparePasssword` method from `captain` model
+
+- Generate token using `generateAuthToken` method in `captain` method
+
+- store token in cookies
+
+- send responce status 200 with `token` and `captain`
+
+  
+
+####  Request
+
+```json
+{
+    "email" : "ram@captain.com",
+    "password" : "1234567890"
+}
+```
+
+####  Responce (Happy Path)
+
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODlkZjRhNWMzODg5MjNkYjYzZGFlZjEiLCJpYXQiOjE3NTUxODIzMjksImV4cCI6MTc1NTI2ODcyOX0.rUb_aTzySBlmD8_AuWpkoy_LDPS2fWl6G1KCawKuZHM",
+    "captain": {
+        "fullname": {
+            "firstname": "ram",
+            "lastname": "chandra"
+        },
+        "vehicle": {
+            "color": "pink",
+            "plate": "pink",
+            "model": "pink",
+            "capacity": 2,
+            "vehicleType": "car"
+        },
+        "_id": "689df4a5c388923db63daef1",
+        "email": "ram@captain.com",
+        "password": "$2b$10$7VQG/px6u1Wobvk5mKjUuuWUOMdJtUncfkYSAoQApslXPiIgJ8gQa",
+        "status": "inactive",
+        "__v": 0
+    }
+}
+```
+
+  
+  
+
+
+#### /users/login – Error Responses
+
+This document lists the possible error responses returned by the `/users/login` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **400 Bad Request** | **Validation Errors** | The request body fails validation rules defined via `express-validator`. The response contains an `errors` array, where each object includes:<br> - `msg`: The validation error message<br> - `path`: The field that failed validation<br> - `location`: The request location (e.g., `"body"`)<br> - `value`: The value that failed validation. | `{ errors : errors.array() }` |
+| **401 Unauthorized** | **Invalid Credentials** | Occurs when the provided email or password does not match any user in the database. If the email exists but the password is wrong, a slightly different message may be returned. | `invalid email and password` |
+| **500 Internal Server Error** *(Future Possibility)* | **Server/DB Failure** | An internal authentication or database connection error occurred. | `internal server error`|
+
+
+###  GET `/users/profile`
+
+- run `authMiddleware.authCaptain`
+
+- run `captainController.getcaptainProfile`
+
+####  `userController.getcaptainProfile`
+
+- fetch `req.user` and send in response
+
+  
+  
+
+####  Request
+
+No Request is needed
+
+  
+
+####  Responce (Happy Path)
+
+```json
+{
+    "captain": {
+        "fullname": {
+            "firstname": "meowfirstname",
+            "lastname": "meowlastname"
+        },
+        "vehicle": {
+            "color": "pink",
+            "plate": "pink",
+            "model": "pink",
+            "capacity": 2,
+            "vehicleType": "car"
+        },
+        "_id": "689d93c3b83bfec9532c54c2",
+        "email": "meow@captain.com",
+        "status": "inactive",
+        "__v": 0
+    }
+}
+```
+
+  
+  
+
+#### /users/profile – Error Responses
+
+This document lists the possible error responses returned by the `/users/profile` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No authentication token provided in cookies or the `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Provided token exists in the blacklist, indicating it has been revoked or logged out. | `{ "message": "Unauthorized " }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | Token signature mismatch, token expired, or invalid token format. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Database connection error occurs during token validation or user lookup. | `{ "message": "Internal Server Error" }` |
+
+
+### GET `/captain/logout`
+
+- run `authMiddleware.authCaptain`
+
+- run `captainController.logoutCaptain`
+
+#### `captainController.logoutcaptain`
+
+- Clear Cookie
+
+- Store `token` in `blacklistTokenModel` so it cant be reused
+
+- in response send`logged out`
+
+  
+
+#### Request
+
+No Request is needed
+
+  
+
+####  Response (Happy Path)
+
+```json
+{
+"message":  "logged out"
+}
+```
+
+  
+
+####  Now if we try to login
+
+  
+
+```json
+{
+  "message":  "Unauthorized "
+}
+```
+
+  
+  
+  
+
+#### /users/logout – Error Responses
+
+This document lists the possible error responses returned by the `/users/logout` endpoint.
+
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No authentication token provided in cookies or the `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Provided token exists in the blacklist, meaning it has already been revoked or the user is already logged out. | `{ "message": "Unauthorized " }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | Token signature mismatch, token expired, or malformed token. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Database error during token validation or blacklist creation. | `{ "message": "Internal Server Error" }` |
+
+
+

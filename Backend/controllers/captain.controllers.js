@@ -68,12 +68,17 @@ module.exports.getCaptainProfile = async (req, res, next) => {
 }
 
 module.exports.logoutCaptain = async (req, res, next) => {
-    const token = req.cookie.token || req.headers.authorization?.split(' ')[1];
+    const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
+
+    if (!token) {
+        return res.status(400).json({ message: 'No token found' });
+    }
+
+    res.clearCookie('token');
 
     await blacklistTokenModel.create({ token });
-    res.clearCookie('token');
-    res.status(200).json({
-        message : 'logout syccessful'
-    })
-}
+    
+    res.status(200).json({ message: 'logout successful' });
+};
+
  
