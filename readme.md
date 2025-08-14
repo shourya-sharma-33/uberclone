@@ -195,11 +195,12 @@ An extra layer of security to prevent users from logging in with old or compromi
 #  Middlewares
 
   
-
+--------------
 ##  Authentication Middlewares
 
 `middlewares/auth.middleware.js` : contains authentication based middlwares
 
+--------------
   
 
 ###  authUser Middleware
@@ -293,8 +294,11 @@ If database queries fail (e.g., user not found due to a DB outage), this could b
 `{ "message": "Internal Server Error" }`
 
   
+--------------
 
 ###  captainUser Middleware
+
+--------------
 
 The `authCaptain` middleware authenticates captain based on their **Token**
 
@@ -416,11 +420,11 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
 ------------
 
-#  `/users`
+##  `/users`
 
 ------------
 
-#  POST `/users/register`
+###  POST `/users/register`
 
 - Check if
 
@@ -434,7 +438,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-##  `userController.registerUser`
+###  `userController.registerUser`
 
 - Store validation results in errors object
 
@@ -456,7 +460,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-##  Request
+###  Request
 
 ```json
 
@@ -478,7 +482,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
 ```
 
-##  Responce (Happy Path)
+###  Responce (Happy Path)
 
 ```json
 
@@ -512,7 +516,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-##  Errors
+###  Errors
 
   
 
@@ -520,7 +524,7 @@ The `/users/register` endpoint can return the following error responses:
 
   
 
-###  **400 Bad Request – Validation Errors**
+####  **400 Bad Request – Validation Errors**
 
   
 
