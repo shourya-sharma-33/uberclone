@@ -315,11 +315,11 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
 ------------
 
-##  `/users`
+###  `/users`
 
 ------------
 
-###  POST `/users/register`
+####  POST `/users/register`
 
 - Check if
 
@@ -333,7 +333,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-###  `userController.registerUser`
+####  `userController.registerUser`
 
 - Store validation results in errors object
 
@@ -355,71 +355,47 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
   
 
-###  Request
+####  Request
 
 ```json
-
 {
-
 "fullname"  :  {
-
 "firstname"  :  "shourya",
-
 "lastname"  :  "sharma"
-
 },
-
 "email"  :  "shourya@gmail.com"
-
 "password"  :  "123456789"
-
 }
-
 ```
 
-###  Responce (Happy Path)
+####  Responce (Happy Path)
 
 ```json
-
 {
-
 "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODljOWYwOWU2N2IwZGU2ZDU5NWU5OGIiLCJpYXQiOjE3NTUwOTQ3OTMsImV4cCI6MTc1NTE4MTE5M30.0tdlvGgX1MVpjaeacXYC-vYwgwNUbDJjFY_4XNlTxw4",
-
 "user":  {
-
 "fullname":  {
-
 "firstname":  "ram",
-
 "lastname":  "chandra"
-
 },
-
 "email":  "ramchandra@gmail.com",
-
 "password":  "$2b$10$h9fzTFAXCBwygxsRApJDBu/XYrjhToWQ/1XkwwZAnCqr8Vfi1BozO",
-
 "_id":  "689c9f09e67b0de6d595e98b",
-
 "__v":  0
-
 }
-
 }
-
 ```
 
   
 
-###  Errors
+####  Errors
 
   
 
 The `/users/register` endpoint can return the following error responses:
 
   
-
-####  **400 Bad Request – Validation Errors**
+**400 Bad Request – Validation Errors**
 
   
 
@@ -444,60 +420,35 @@ The response contains an `errors` array, where each object has:
 ```
 
 {
-
 "errors": [
-
 {
-
 "type": "field",
-
 "value": "shourya@gmail",
-
 "msg": "Invalid Email",
-
 "path": "email",
-
 "location": "body"
-
 },
-
 {
-
 "type": "field",
-
 "value": "ra",
-
 "msg": "Fullname should be more than two letters",
-
 "path": "fullname.firstname",
-
 "location": "body"
-
 },
-
 {
-
 "type": "field",
-
 "value": "123",
-
 "msg": "Passsword should be more than 6 letters",
-
 "path": "password",
-
 "location": "body"
-
 }
-
 ]
-
 }
-
 ```
 
   
 
-####  **400 Bad Request – User Already Exists**
+ **400 Bad Request – User Already Exists**
 
   
 
@@ -508,18 +459,14 @@ Occurs when a user with the same email is already in the database.
   
 
 ```
-
 {
-
 "message": "user already exists"
-
 }
-
 ```
 
   
 
-####  **Possible Future Errors**
+  **Possible Future Errors**
 
   
 
@@ -530,9 +477,7 @@ If authentication or DB connection fails internally, this could be extended to r
 ```
 
 {
-
 "message": "Internal Server Error"
-
 }
 
 ```
