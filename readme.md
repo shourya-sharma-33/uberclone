@@ -132,8 +132,47 @@ It performs the following steps:
 4. Attaches the decoded user object to `req.user`.
 5. Calls `next()` if the user is authorized, or returns a 401 Unauthorized error otherwise.
 
-<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" width="500">
+<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
 
+## **Errors – `authUser` Middleware**
+
+The `authUser` middleware can return the following error responses:
+
+#### **401 Unauthorized – Missing Token**
+
+Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
+
+**Example:**
+
+`{  "message":  "Unauthorized"  }` 
+
+----------
+
+#### **401 Unauthorized – Blacklisted Token**
+
+Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
+
+**Example:**
+
+`{  "message":  "Unauthorized "  }` 
+
+----------
+
+#### **401 Unauthorized – Invalid or Expired Token**
+
+Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
+
+**Example:**
+
+`{  "message":  "Unauthorized"  }` 
+
+----------
+
+#### **Possible Future Errors**
+
+If database queries fail (e.g., user not found due to a DB outage), this could be extended to return:
+
+`{  "message":  "Internal Server Error"  }`
 
 #### captainUser Middleware
 The `authCaptain` middleware authenticates captain based on their **Token**
@@ -144,6 +183,46 @@ The `authCaptain` middleware authenticates captain based on their **Token**
 5. Calls `next()` if the captain is authorized, or returns a 401 Unauthorized error otherwise.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" alt="Example Image" width="500">
+
+## **Errors – `authCaptain` Middleware**
+
+The `authCaptain` middleware can return the following error responses:
+
+#### **401 Unauthorized – Missing Token**
+
+Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
+
+**Example:**
+
+`{  "message":  "Unauthorized33"  }` 
+
+----------
+
+#### **401 Unauthorized – Blacklisted Token**
+
+Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
+
+**Example:**
+
+`{  "message":  "Unauthorized39"  }` 
+
+----------
+
+#### **401 Unauthorized – Invalid or Expired Token**
+
+Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
+
+**Example:**
+
+`{  "message":  "unauthorizd47"  }` 
+
+----------
+
+#### **Possible Future Errors**
+
+If database queries fail (e.g., captain not found due to a DB outage), this could be extended to return:
+
+`{  "message":  "Internal Server Error"  }`
 
 ## Services
 
