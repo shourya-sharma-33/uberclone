@@ -1,20 +1,22 @@
+# Uber Clone (Under Progress)
+
 Hello! I am Shourya Sharma and This is a Full Stack Uber Clone App made in MERN Stack (MongoDB, Express, React and Node.js)
 
 [Will append more in the introduction after I will complete the project, discussing about all the features]
 
   
 
-# Note from The Developer
+## Note from The Developer
 
 This project, including its codebase and documentation, has been created entirely through my own effort without the use of AI generated code or automated writing tools. I built and documented this project from scratch as a way to sharpen my problem solving skills, deepen my understanding of backend development, and strengthen my ability to communicate technical details clearly. Every decision, implementation, and explanation here reflects my own learning process and hands-on work. in my initial commits I had generated docs from AI, but then I deleted and decided to rewrite myself while testing and drawing flowchart of each API end point
 
   
 
-#  Folder Structure
+##  Folder Structure
 
   
 
-##  Initialisation
+###  Initialisation
 
 -  `app.js`: Main Express app setup and middleware configuration.
 
@@ -22,7 +24,7 @@ This project, including its codebase and documentation, has been created entirel
 
 -  `server.js`: HTTP server entry point.
 
-##  Database and Schema Setup
+###  Database and Schema Setup
 
   
 
@@ -34,7 +36,7 @@ This project, including its codebase and documentation, has been created entirel
 
 -  `models/blacklistToken.model.js`: Mongoose schema for blacklisted JWT tokens.
 
-##  Routes
+###  Routes
 
   
 
@@ -42,13 +44,13 @@ This project, including its codebase and documentation, has been created entirel
 
 -  `routes/captain.routes.js`: Captain-related API routes.
 
-##  Controllers 
+###  Controllers 
 
 -  `controllers/user.controllers.js`: User controller functions (register, login, profile, logout).
 
 -  `controllers/captain.controllers.js`: Captain controller functions (register, etc).
 
-##  Middlewares
+###  Middlewares
 
   
 
@@ -56,7 +58,7 @@ This project, including its codebase and documentation, has been created entirel
 
   
 
-##  Service
+###  Service
 
 -  `services/user.services.js`: User creation service.
 
@@ -71,7 +73,7 @@ This project, including its codebase and documentation, has been created entirel
 
   
 
-#  Setup Instructions
+##  Setup Instructions
 
   
 
@@ -82,11 +84,8 @@ This project, including its codebase and documentation, has been created entirel
   
 
 ```powershell
-
 cd Backend
-
 npm install
-
 ```
 
   
@@ -96,15 +95,10 @@ npm install
   
 
 ```env
-
 DB_CONNECT=your_mongodb_connection_string
-
 JWT_SECRET=your_jwt_secret
-
 NODE_ENV=development
-
 PORT=3000
-
 ```
 
   
@@ -114,17 +108,15 @@ PORT=3000
   
 
 ```powershell
-
 node server.js
-
 ```
 
   
 
-#  Database Models
+##  Database Models
 
 
-##  User Model
+###  User Model
 
   
 
@@ -148,7 +140,7 @@ The `User` schema defines how user data is stored in MongoDB.
 
   
 
-##  Captain Model
+###  Captain Model
 
   
 
@@ -181,7 +173,7 @@ The `Captain` schema defines how captain (driver) data is stored in MongoDB.
 
   
 
-##  Blacklisted Token
+###  Blacklisted Token
 
 An extra layer of security to prevent users from logging in with old or compromised tokens that may still be stored on their system. This collection stores all previously used tokens and ensures that any token presented by a user is not blacklisted (already used or invalidated).
 
@@ -192,18 +184,15 @@ An extra layer of security to prevent users from logging in with old or compromi
 | `createdAt`| Date   | Yes      | Default is the creation date.    |
 
 
-#  Middlewares
+##  Middlewares
 
   
---------------
-##  Authentication Middlewares
+###  Authentication Middlewares
 
 `middlewares/auth.middleware.js` : contains authentication based middlwares
-
---------------
   
 
-###  authUser Middleware
+####  authUser Middleware
 
 The `authUser` middleware is responsible for authenticating a user based on their **JWT token**.
 
@@ -225,7 +214,7 @@ It performs the following steps:
 
   
 
-####  **Errors – `authUser` Middleware**
+#####  **Errors – `authUser` Middleware**
 
   
 
@@ -294,11 +283,9 @@ If database queries fail (e.g., user not found due to a DB outage), this could b
 `{ "message": "Internal Server Error" }`
 
   
---------------
 
 ###  captainUser Middleware
 
---------------
 
 The `authCaptain` middleware authenticates captain based on their **Token**
 
