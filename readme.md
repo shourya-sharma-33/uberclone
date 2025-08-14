@@ -146,8 +146,6 @@ Occurs when the request does not include a valid authentication token in `cookie
 
 `{  "message":  "Unauthorized"  }` 
 
-----------
-
 ###### **401 Unauthorized – Blacklisted Token**
 
 Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
@@ -156,7 +154,6 @@ Occurs when the provided token is found in the `blacklistToken` collection (e.g.
 
 `{  "message":  "Unauthorized "  }` 
 
-----------
 
 ###### **401 Unauthorized – Invalid or Expired Token**
 
@@ -166,7 +163,6 @@ Occurs when the JWT signature is invalid, the token has expired, or it cannot be
 
 `{  "message":  "Unauthorized"  }` 
 
-----------
 
 ###### **Possible Future Errors**
 
@@ -196,7 +192,7 @@ Occurs when the request does not include a valid authentication token in `cookie
 
 `{  "message":  "Unauthorized33"  }` 
 
-----------
+
 
 ###### **401 Unauthorized – Blacklisted Token**
 
@@ -206,7 +202,6 @@ Occurs when the provided token is found in the `blacklistToken` collection (e.g.
 
 `{  "message":  "Unauthorized39"  }` 
 
-----------
 
 ###### **401 Unauthorized – Invalid or Expired Token**
 
@@ -216,7 +211,6 @@ Occurs when the JWT signature is invalid, the token has expired, or it cannot be
 
 `{  "message":  "unauthorizd47"  }` 
 
-----------
 
 ###### **Possible Future Errors**
 
