@@ -129,24 +129,14 @@ node server.js
   
 
 The `User` schema defines how user data is stored in MongoDB.
+| Field                | Type   | Required | Details                                         |
+|----------------------|--------|----------|-------------------------------------------------|
+| `fullname.firstname` | String | Yes      | Min length 3 characters.                        |
+| `fullname.lastname`  | String | No       | Min length 3 characters if provided.            |
+| `email`              | String | Yes      | Unique, min length 5 characters.                |
+| `password`           | String | Yes      | Hashed before storage, not returned in queries. |
+| `socketId`           | String | No       | Stores user’s WebSocket connection ID.          |
 
-  
-
-| Field | Type | Required | Details |
-
-|-------------------|--------|----------|---------|
-
-|  `fullname.firstname`  | String | Yes | Min length 3 characters. |
-
-|  `fullname.lastname`  | String | No | Min length 3 characters if provided. |
-
-|  `email`  | String | Yes | Unique, min length 5 characters. |
-
-|  `password`  | String | Yes | Hashed before storage, not returned in queries. |
-
-|  `socketId`  | String | No | Stores user’s WebSocket connection ID. |
-
-  
 
 **Custom Methods**
 
@@ -164,39 +154,22 @@ The `User` schema defines how user data is stored in MongoDB.
 
 The `Captain` schema defines how captain (driver) data is stored in MongoDB.
 
-  
+ | Field                 | Type   | Required | Details                                                    |
+|-----------------------|--------|----------|------------------------------------------------------------|
+| `fullname.firstname`  | String | Yes      | Min length 3 characters.                                   |
+| `fullname.lastname`   | String | No       | Min length 3 characters if provided.                       |
+| `email`               | String | Yes      | Unique, lowercase, must match a valid email format.        |
+| `password`            | String | Yes      | Hashed before storage, excluded from query results.        |
+| `socketId`            | String | No       | Stores WebSocket connection ID.                            |
+| `status`              | String | No       | Enum: `active`, `inactive` (default: `inactive`).          |
+| `vehicle.color`       | String | Yes      | Min length 3 characters.                                   |
+| `vehicle.plate`       | String | Yes      | Min length 2 characters.                                   |
+| `vehicle.model`       | String | Yes      | Min length 3 characters.                                   |
+| `vehicle.capacity`    | Number | Yes      | Minimum value: 1.                                          |
+| `vehicle.vehicleType` | String | Yes      | Enum: `car`, `motocycle`, `auto`.                          |
+| `location.latitude`   | Number | No       | Current latitude of the captain.                           |
+| `location.longitude`  | Number | No       | Current longitude of the captain.                          |
 
-| Field | Type | Required | Details |
-
-|--------------------------------|----------|----------|---------|
-
-|  `fullname.firstname`  | String | Yes | Min length 3 characters. |
-
-|  `fullname.lastname`  | String | No | Min length 3 characters if provided. |
-
-|  `email`  | String | Yes | Unique, lowercase, must match a valid email format. |
-
-|  `password`  | String | Yes | Hashed before storage, excluded from query results. |
-
-|  `socketId`  | String | No | Stores WebSocket connection ID. |
-
-|  `status`  | String | No | Enum: `active`, `inactive` (default: `inactive`). |
-
-|  `vehicle.color`  | String | Yes | Min length 3 characters. |
-
-|  `vehicle.plate`  | String | Yes | Min length 2 characters. |
-
-|  `vehicle.model`  | String | Yes | Min length 3 characters. |
-
-|  `vehicle.capacity`  | Number | Yes | Minimum value: 1. |
-
-|  `vehicle.vehicleType`  | String | Yes | Enum: `car`, `motocycle`, `auto`. |
-
-|  `location.latitude`  | Number | No | Current latitude of the captain. |
-
-|  `location.longitude`  | Number | No | Current longitude of the captain. |
-
-  
 
 **Custom Methods**
 
