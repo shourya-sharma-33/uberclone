@@ -319,7 +319,7 @@ If database queries fail (e.g., captain not found due to a DB outage), this coul
 
 ------------
 
-####  POST `/users/register`
+###  POST `/users/register`
 
 - Check if
 
@@ -482,7 +482,7 @@ If authentication or DB connection fails internally, this could be extended to r
 
 ```
 
-#  POST `/users/login`
+###  POST `/users/login`
 
 - Check if
 
@@ -492,7 +492,7 @@ If authentication or DB connection fails internally, this could be extended to r
 
 - Run `userController.loginUser` controller
 
-##  `userController.loginUser`
+####  `userController.loginUser`
 
 - Store validation results in errors object
 
@@ -512,56 +512,37 @@ If authentication or DB connection fails internally, this could be extended to r
 
   
 
-##  Request
+####  Request
 
 ```json
-
 {
-
 "email"  :  "ramchandra@gmail.com",
-
 "password"  :  "123456789"
-
 }
-
 ```
 
-##  Responce (Happy Path)
+####  Responce (Happy Path)
 
 ```json
-
 {
-
 "token":  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODljOWYwOWU2N2IwZGU2ZDU5NWU5OGIiLCJpYXQiOjE3NTUwOTY5NDksImV4cCI6MTc1NTE4MzM0OX0.Vv91litFq7oflrCghnZy0_InnFcRY1q0mJurYYaQGyc",
-
 "user":  {
-
 "fullname":  {
-
 "firstname":  "ram",
-
 "lastname":  "chandra"
-
 },
-
 "_id":  "689c9f09e67b0de6d595e98b",
-
 "email":  "ramchandra@gmail.com",
-
 "password":  "$2b$10$h9fzTFAXCBwygxsRApJDBu/XYrjhToWQ/1XkwwZAnCqr8Vfi1BozO",
-
 "__v":  0
-
 }
-
 }
-
 ```
 
   
   
 
-##  Errors
+####  Errors
 
   
 
@@ -571,7 +552,7 @@ The `/users/login` endpoint can return the following error responses:
   
   
 
-####  **400 Bad Request – Validation Errors**
+**400 Bad Request – Validation Errors**
 
   
 
@@ -600,50 +581,26 @@ The response contains an `errors` array, where each object includes:
   
 
 ```
-
 {
-
 "errors": [
-
 {
-
 "type": "field",
-
 "value": "shourya@gmail",
-
 "msg": "Invalid Email",
-
 "path": "email",
-
 "location": "body"
-
 },
-
 {
-
 "type": "field",
-
 "value": "123",
-
 "msg": "password bada rakho babygirl",
-
 "path": "password",
-
 "location": "body"
-
 }
-
 ]
-
 }
-
 ```
-
-  
-  
-  
-
-####  **401 Unauthorized – Invalid Credentials**
+ **401 Unauthorized – Invalid Credentials**
 
   
 
@@ -669,7 +626,7 @@ If the email exists but the password is incorrect, the system may also return:
   
   
 
-####  **Possible Future Errors**
+**Possible Future Errors**
 
   
 
