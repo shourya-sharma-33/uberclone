@@ -213,29 +213,16 @@ It performs the following steps:
 
 <img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
 
-**Errors – `authUser` Middleware**
-The `authUser` middleware can return the following error responses:
+# authUser Middleware – Error Responses
 
-**401 Unauthorized – Missing Token**
-Occurs when the request does not include a valid authentication token in `cookies.token` or `Authorization` header.
+This document describes the possible error responses returned by the `authUser` middleware.
 
-**Example:**
-`{ "message": "Unauthorized" }`
-
- **401 Unauthorized – Blacklisted Token**
-Occurs when the provided token is found in the `blacklistToken` collection (e.g., after a logout).
-
-**Example:**
-`{ "message": "Unauthorized " }`
-**401 Unauthorized – Invalid or Expired Token**
-Occurs when the JWT signature is invalid, the token has expired, or it cannot be decoded using `process.env.JWT_SECRET`.
-
-**Example:**
-`{ "message": "Unauthorized" }`
-
-**Possible Future Errors**
-If database queries fail (e.g., user not found due to a DB outage), this could be extended to return:
-`{ "message": "Internal Server Error" }`
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|---------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No valid authentication token found in `cookies.token` or `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Token exists in the `blacklistToken` collection (e.g., user logged out). | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | JWT signature is invalid, token has expired, or cannot be decoded with `process.env.JWT_SECRET`. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | User lookup fails (e.g., DB outage or user not found). | `{ "message": "Internal Server Error" }` |
 
 ------------
 
