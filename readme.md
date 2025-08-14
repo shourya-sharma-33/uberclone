@@ -425,100 +425,15 @@ This document lists the possible error responses returned by the `/users/registe
 
 ####  Errors
 
-  
+  # /users/login – Error Responses
 
-The `/users/login` endpoint can return the following error responses:
+This document lists the possible error responses returned by the `/users/login` endpoint.
 
-  
-  
-  
-
-**400 Bad Request – Validation Errors**
-
-  
-
-Occurs when the request body fails validation rules defined via `express-validator`.
-
-  
-
-**Response Format:**
-
-The response contains an `errors` array, where each object includes:
-
-  
-
--  `msg`: The validation error message
-
--  `path`: The field that failed validation
-
--  `location`: The request location (e.g., `"body"`)
-
--  `value`: The value that failed validation
-
-  
-
-**Example:** Invalid email and too short password
-
-  
-
-```
-{
-"errors": [
-{
-"type": "field",
-"value": "shourya@gmail",
-"msg": "Invalid Email",
-"path": "email",
-"location": "body"
-},
-{
-"type": "field",
-"value": "123",
-"msg": "password bada rakho babygirl",
-"path": "password",
-"location": "body"
-}
-]
-}
-```
- **401 Unauthorized – Invalid Credentials**
-
-  
-
-Occurs when the provided email or password does not match any user in the database.
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "invalid email or password" }`
-
-  
-
-If the email exists but the password is incorrect, the system may also return:
-
-  
-
-`{ "message": "invalid email and password" }`
-
-  
-  
-  
-
-**Possible Future Errors**
-
-  
-
-If authentication or DB connection fails internally, this could be extended to return:
-
-  
-
-`{ "message": "Internal Server Error" }`
-
-  
-
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **400 Bad Request** | **Validation Errors** | The request body fails validation rules defined via `express-validator`. The response contains an `errors` array, where each object includes:<br> - `msg`: The validation error message<br> - `path`: The field that failed validation<br> - `location`: The request location (e.g., `"body"`)<br> - `value`: The value that failed validation. | `````` |
+| **401 Unauthorized** | **Invalid Credentials** | Occurs when the provided email or password does not match any user in the database. If the email exists but the password is wrong, a slightly different message may be returned. | `````` <br>OR<br> `````` |
+| **500 Internal Server Error** *(Future Possibility)* | **Server/DB Failure** | An internal authentication or database connection error occurred. | `````` |
 ###  GET `/users/profile`
 
 - run `authMiddleware.authUser`
@@ -567,79 +482,17 @@ No Request is needed
 
 ####  Errors
 
-  
+ # /users/profile – Error Responses
 
-The `/users/profile` endpoint can return the following error responses:
+This document lists the possible error responses returned by the `/users/profile` endpoint.
 
-  
-  
-  
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No authentication token provided in cookies or the `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Provided token exists in the blacklist, indicating it has been revoked or logged out. | `{ "message": "Unauthorized " }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | Token signature mismatch, token expired, or invalid token format. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Database connection error occurs during token validation or user lookup. | `{ "message": "Internal Server Error" }` |
 
- **401 Unauthorized – Missing Token**
-
-  
-
-Occurs when no authentication token is provided in cookies or the `Authorization` header.
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "Unauthorized" }`
-
-  
-  
-  
-
-  **401 Unauthorized – Blacklisted Token**
-
-  
-
-Occurs when the provided token exists in the blacklist, indicating it has been revoked or logged out.
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "Unauthorized " }`
-
-  
-  
-  
-  **401 Unauthorized – Invalid or Expired Token**
-
-  
-
-Occurs when token verification fails (e.g., signature mismatch, token expired, or invalid token format).
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "Unauthorized" }`
-
-  
-  
-  
-
-**Possible Future Errors**
-
-  
-
-If database connection fails during token validation or user lookup, the error could be extended to return:
-
-  
-
-`{ "message": "Internal Server Error" }`
-
-  
-  
 
 ### GET `/users/logout`
 
@@ -697,73 +550,16 @@ No Request is needed
 
 ###  Errors
 
-  
+  # /users/logout – Error Responses
 
-The `/users/logout` endpoint can return the following error responses:
+This document lists the possible error responses returned by the `/users/logout` endpoint.
 
-  
-  
-
- **401 Unauthorized – Missing Token**
-
-  
-
-Occurs when no authentication token is provided in cookies or the `Authorization` header.
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "Unauthorized" }`
-
-  
-
- **401 Unauthorized – Blacklisted Token**
-
-  
-
-Occurs when the provided token exists in the blacklist, meaning it has already been revoked or the user is already logged out.
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "Unauthorized " }`
-
-  
-  
-  
-
-**401 Unauthorized – Invalid or Expired Token**
-
-  
-
-Occurs when token verification fails due to signature mismatch, expiration, or malformed token.
-
-  
-
-**Example:**
-
-  
-
-`{ "message": "Unauthorized" }`
-
-  
-  
-
-  **Possible Future Errors**
-
-  
-
-If database connection fails during token validation or blacklist creation, the error could be extended to return:
-
-  
-
-`{ "message": "Internal Server Error" }`
+| **HTTP Status** | **Error Type** | **Description** | **Example Response** |
+|-----------------|----------------|-----------------|----------------------|
+| **401 Unauthorized** | **Missing Token** | No authentication token provided in cookies or the `Authorization` header. | `{ "message": "Unauthorized" }` |
+| **401 Unauthorized** | **Blacklisted Token** | Provided token exists in the blacklist, meaning it has already been revoked or the user is already logged out. | `{ "message": "Unauthorized " }` |
+| **401 Unauthorized** | **Invalid or Expired Token** | Token signature mismatch, token expired, or malformed token. | `{ "message": "Unauthorized" }` |
+| **500 Internal Server Error** *(Future Possibility)* | **Database Failure** | Database error during token validation or blacklist creation. | `{ "message": "Internal Server Error" }` |
 
   
 ------------  
