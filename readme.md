@@ -185,13 +185,12 @@ The `Captain` schema defines how captain (driver) data is stored in MongoDB.
 
 An extra layer of security to prevent users from logging in with old or compromised tokens that may still be stored on their system. This collection stores all previously used tokens and ensures that any token presented by a user is not blacklisted (already used or invalidated).
 
-| Field | Type | Required | Details |
 
-|--------------------------------|----------|----------|---------|
+| Field      | Type   | Required | Details                          |
+|------------|--------|----------|----------------------------------|
+| `token`    | String | Yes      | Stores all past tokens.          |
+| `createdAt`| Date   | Yes      | Default is the creation date.    |
 
-|  `token`  | String | Yes | Stores all past tokens |
-
-|  `createdAt`  | Date | Yes | Default is when created at |
 
 #  Middlewares
 
