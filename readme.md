@@ -210,9 +210,9 @@ It performs the following steps:
 
   
 
-<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;"
+<img src="Flowcharts\Authentication-middleware\Untitled Diagram.svg" alt="Example Image" style="width:100%;">
 
-**Errors – `authUser` Middleware**
+##### **Errors – `authUser` Middleware**
 The `authUser` middleware can return the following error responses:
 
 **401 Unauthorized – Missing Token**
