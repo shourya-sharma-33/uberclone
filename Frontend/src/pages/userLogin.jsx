@@ -37,8 +37,7 @@ const UserLogin = () => {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                console.log(email);
-              }}
+                }}
               placeholder="shouryasharma@developer.com"
               className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
             />
@@ -55,8 +54,7 @@ const UserLogin = () => {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                console.log(password);
-              }}
+                }}
               placeholder="Enter password"
               className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
             />
