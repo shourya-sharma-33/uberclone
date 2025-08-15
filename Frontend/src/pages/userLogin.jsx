@@ -4,11 +4,19 @@ import { Link } from 'react-router-dom';
 const UserLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userData, setUserData] = useState({})
+
   const submitHandler = (e) => {
     e.preventDefault()
-    console.log("submit");
+    setUserData({
+      user : email,
+      password : password
+    })
+    console.log(userData)
+    setEmail('')
+    setPassword('')
   }
-  return (
+  return  (
     <div className="min-h-screen flex items-center justify-center bg-[#eeeeee]">
       <div className="w-full m-5 max-w-md px-8 py-10 bg-white rounded-lg shadow-lg">
       <div className='w-full justify-center'>
