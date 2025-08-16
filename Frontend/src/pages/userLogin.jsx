@@ -1,87 +1,88 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { UserDataContext } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const UserLogin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [userData, setUserData] = useState({})
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ userData, setUserData ] = useState({})
 
-  const submitHandler = (e) => {
-    e.preventDefault()
-    setUserData({
-      user : email,
-      password : password
-    })
-    console.log(userData)
+  const { user, setUser } = useContext(UserDataContext)
+  const navigate = useNavigate()
+
+
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email: email,
+      password: password
+    }
+
+    const response = await axios.post(`http://localhost:3000/users/login`, userData)
+
+    if (response.status === 200) {
+      const data = response.data
+      setUser(data.user)
+      localStorage.setItem('token', data.token)
+      navigate('/')
+    }
+
+
     setEmail('')
     setPassword('')
   }
-  return  (
-    <div className="min-h-screen flex items-center justify-center bg-[#eeeeee]">
-      <div className="w-full m-5 max-w-md px-8 py-10 bg-white rounded-lg shadow-lg">
-      <div className='w-full justify-center'>
-        <img src="https://logos-world.net/wp-content/uploads/2020/05/Uber-Logo.png" className='w-32 justify-self-center' alt="" />
-      </div>
-        <h2 className=" font-bold text-black/80 mb-8 text-center tracking-wide text-lg">
-          Sign in to your account
-        </h2>
-        <form className="flex flex-col gap-6" onSubmit={submitHandler}>
-          <div>
-            <label className="block text-black text-sm font-medium mb-2" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                }}
-              placeholder="shouryasharma@developer.com"
-              className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
-            />
-          </div>
-          <div>
-            <label className="block text-black text-sm font-medium mb-2" htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                }}
-              placeholder="Enter password"
-              className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
-            />
-          </div>
+
+  return (
+    <div className='p-7 h-screen flex flex-col justify-between'>
+      <div>
+        <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
+
+        <form onSubmit={(e) => {
+          submitHandler(e)
+        }}>
+          <h3 className='text-lg font-medium mb-2'>What's your email</h3>
+          <input
+            required
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
+            className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+            type="email"
+            placeholder='email@example.com'
+          />
+
+          <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
+
+          <input
+            className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
+            required type="password"
+            placeholder='password'
+          />
+
           <button
-            type="submit"
-            className="w-full py-3 mt-4 rounded bg-black text-white font-semibold tracking-wider hover:bg-gray-900 transition"
-          >
-            Login
-          </button>
+            className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
+          >Login</button>
+
         </form>
-         <Link
-         to='/captain-login'
-           >
-            <button  className="w-full py-3 mt-4 rounded bg-purple-800  text-white font-semibold tracking-wider hover:bg-gray-900 transition"
-            
-            >Sign in as captain</button>
-          </Link>
-        <div className="mt-6 text-center text-gray-500 text-sm">
-          New to Uber?{' '}
-          <Link to='/signup' className="underline cursor-pointer text-black hover:text-gray-700">
-            Create an account
-          </Link>
-        </div>
+        <p className='text-center'>New here? <Link to='/signup' className='text-blue-600'>Create new Account</Link></p>
+      </div>
+      <div>
+        <Link
+          to='/captain-login'
+          className='bg-[#10b461] flex items-center justify-center text-white font-semibold mb-5 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
+        >Sign in as Captain</Link>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserLogin;
+export default UserLogin

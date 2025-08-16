@@ -80,7 +80,7 @@ const CaptainLogin = () => {
         </div>
       </div>
     </div>
-  );
+  ); 
 };
 
 export default CaptainLogin;

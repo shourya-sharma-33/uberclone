@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { CaptainDataContext } from '../context/CapatainContext';
 const CaptainSignup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,10 +11,11 @@ const CaptainSignup = () => {
   const [vehiclePlate, setVehiclePlate] = useState('');
   const [vehicleCapacity, setVehicleCapacity] = useState('');
   const [vehicleType, setVehicleType] = useState('');
+  const { captain, setCaptain } = React.useContext(CaptainDataContext) 
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setCaptainData({
+    const captainData = {
       fullName: {
         firstname: firstname,
         lastname: lastname
@@ -27,7 +28,10 @@ const CaptainSignup = () => {
         capacity: vehicleCapacity,
         type: vehicleType
       }
-    });
+    }
+
+    const response = await axios.post(`http://localhost:3000/captains/register`, captainData)
+
     console.log(captainData);
     setEmail('');
     setPassword('');
