@@ -1,18 +1,30 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [captainData, setCaptainData] = useState({});
-
-  const submitHandler = (e) => {
+  const navigate = useNavigate()
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setCaptainData({
-      captain: email,
+    const captainData = {
+      email: email,
       password: password
-    });
+    }
     console.log(captainData);
+    
+    const response = await axios.post(`http://localhost:3000/captains/login`, captainData)
+
+    if (response.status  === 200) {
+      console.log("done");
+      
+      const data = response.data
+      setCaptainData(data.captain)
+      localStorage.setItem('token', data.token)
+      navigate('/')
+    }
     setEmail('');
     setPassword('');
   };

@@ -39,7 +39,7 @@ const UserSignup = () => {
       setUser(data.user)
       localStorage.setItem('token', data.token)
       navigate('/')
-      
+
     }
 
 
@@ -114,10 +114,9 @@ const UserSignup = () => {
           </form>
           <p className='text-center'>Already have a account? <Link to='/login' className='text-blue-600'>Login here</Link></p>
         </div>
-        <div>
-          <p className='text-[10px] leading-tight'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
-            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>
-        </div>
+              <Link to='/captain-signup' className='text-blue-600'>Sign Up as Captain</Link>
+
+        
       </div>
     </div >
   )

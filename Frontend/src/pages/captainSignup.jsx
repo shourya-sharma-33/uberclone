@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CaptainDataContext } from '../context/CapatainContext';
+import axios from 'axios';
 const CaptainSignup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,26 +12,43 @@ const CaptainSignup = () => {
   const [vehiclePlate, setVehiclePlate] = useState('');
   const [vehicleCapacity, setVehicleCapacity] = useState('');
   const [vehicleType, setVehicleType] = useState('');
+  const [vehicleModel, setVehicleModel] = useState('');
+
   const { captain, setCaptain } = React.useContext(CaptainDataContext) 
+  const navigate = useNavigate()
+
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
     const captainData = {
-      fullName: {
+      fullname: {
         firstname: firstname,
         lastname: lastname
       },
-      captain: email,
+      email: email,
       password: password,
       vehicle: {
         color: vehicleColor,
         plate: vehiclePlate,
-        capacity: vehicleCapacity,
-        type: vehicleType
+        capacity: Number(vehicleCapacity),
+        vehicleType: vehicleType,
+        model : vehicleModel
       }
     }
+    console.log(captainData);
+    
 
     const response = await axios.post(`http://localhost:3000/captains/register`, captainData)
+
+    if (response.status  === 201) {
+      console.log("done");
+      
+      const data = response.data
+      setCaptain(data.captain)
+      localStorage.setItem('token', data.token)
+      navigate('/')
+    }
 
     console.log(captainData);
     setEmail('');
@@ -41,6 +59,7 @@ const CaptainSignup = () => {
     setVehiclePlate('');
     setVehicleCapacity('');
     setVehicleType('');
+    setVehicleModel('');
   };
 
   return (
@@ -149,6 +168,17 @@ const CaptainSignup = () => {
                   required
                   value={vehicleType}
                   onChange={(e) => setVehicleType(e.target.value)}
+                  placeholder="Sedan"
+                  className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
+                />
+              </div>
+              <div>
+                <p>Model</p>
+                <input
+                  type="text"
+                  required
+                  value={vehicleModel}
+                  onChange={(e) => setVehicleModel(e.target.value)}
                   placeholder="Sedan"
                   className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
                 />
