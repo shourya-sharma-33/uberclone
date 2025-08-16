@@ -68,13 +68,15 @@ const Home = () => {
             <input
               type="text"
               placeholder='Enter your Destination'
-              className='bg-[#eee] px-8 w-full h-[10%] shadow-md m-1 py-2 text-lg rounded-lg'
+              className='bg-[#eee] px-8 w-full h-[20%] shadow-md m-1 py-2 text-lg rounded-lg'
               value={destination}
               onClick={() => setPanelOpen(true)}
               onChange={(e) => setDestination(e.target.value)}
             />
           </form>
+          <div className="bg-black h-[80%] mt-10"></div>
         </div>
+        
       </div>
     </div>
   )
