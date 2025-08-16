@@ -6,16 +6,14 @@ const {validationResult} = require('express-validator');
 module.exports.registerCaptain = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({errors : errors.array()});
+    return res.status(400).json({errors : errors.array(), message: "Validation failed. Please check the input fields and try again."});
     }
 
     const { fullname, email, password, vehicle } = req.body;
 
     const isCaptainAlreadyExist = await captainModel.findOne({email});
     if (isCaptainAlreadyExist) {
-        return res.status(400).json({
-            message : 'captain already exists'
-        })
+    return res.status(400).json({ message: "Captain already exists. Please use a different email address." });
     }
 
     const hashedPassword = await captainModel.hashPassword(password);
@@ -43,20 +41,20 @@ module.exports.loginCaptain = async (req, res, next) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({errors : errors.array()});
+    return res.status(400).json({errors : errors.array(), message: "Validation failed. Please check the input fields and try again."});
     } 
     const {email, password} = req.body;
 
     const captain = await captainModel.findOne({email}).select('+password');
 
     if (!captain) {
-        return res.status(401).json({message :'Invalid email or password'});
+    return res.status(401).json({message: "Invalid email or password. Please check your credentials and try again."});
     }
     
     const isMatch = await captain.comparePassword(password);
 
     if (!isMatch) {
-        return res.status(401).json({message : 'invalid email or password'});
+    return res.status(401).json({message: "Invalid email or password. Please check your credentials and try again."});
     }
 
     const token = captain.generateAuthToken();
@@ -71,14 +69,14 @@ module.exports.logoutCaptain = async (req, res, next) => {
     const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
 
     if (!token) {
-        return res.status(400).json({ message: 'No token found' });
+    return res.status(400).json({ message: "No authentication token found. Please log in first." });
     }
 
     res.clearCookie('token');
 
     await blacklistTokenModel.create({ token });
     
-    res.status(200).json({ message: 'logout successful' });
+    res.status(200).json({ message: "Logout successful. You have been signed out." });
 };
 
  
