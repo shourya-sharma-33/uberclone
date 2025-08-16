@@ -1,138 +1,125 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { UserDataContext }  from '../context/UserContext';
+import React, { useState, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { UserDataContext } from '../context/UserContext'
+
+
+
 const UserSignup = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword]  = useState('');
-  const [userData, setUserData] = useState({})
-  const [firstname, setFirstname] = useState('')
-  const [lastname, setLastname] = useState('')
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ firstName, setFirstName ] = useState('')
+  const [ lastName, setLastName ] = useState('')
+  const [ userData, setUserData ] = useState({})
+
   const navigate = useNavigate()
-  const {user ,setUser} = React.useContext(UserContext)
-  
+
+
+
+  const { user, setUser } = useContext(UserDataContext)
+
+
+
+
   const submitHandler = async (e) => {
     e.preventDefault()
     const newUser = {
-      fullName : {
-        firstname : firstname,
-        lastname : lastname
+      fullname: {
+        firstname: firstName,
+        lastname: lastName
       },
-      user : email,
-      password : password
+      email: email,
+      password: password
     }
 
-    const responce = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/register`, newUser)
-    if(responce.status === 201) {
-      const data = responce.data 
+    const response = await axios.post(`http://localhost:3000/users/register`, newUser)
+
+    if (response.status === 201) {
+      const data = response.data
       setUser(data.user)
+      localStorage.setItem('token', data.token)
       navigate('/home')
     }
 
-    console.log(userData)
+
     setEmail('')
+    setFirstName('')
+    setLastName('')
     setPassword('')
-    setFirstname('')
-    setLastname('')
+
   }
-  return  (
-    <div className="min-h-screen flex items-center justify-center bg-[#eeeeee]">
-      <div className="w-full m-5 max-w-md px-8 py-10 bg-white rounded-lg shadow-lg">
-      <div className='w-full justify-center'>
-        <img src="https://logos-world.net/wp-content/uploads/2020/05/Uber-Logo.png" className='w-32 justify-self-center' alt="" />
-      </div>
-        <h2 className=" font-bold text-black/80 mb-8 text-center tracking-wide text-lg">
-          Signup
-        </h2>
-        <form className="flex flex-col gap-6" onSubmit={submitHandler}>
-          <div>
-            <label className="block text-black text-sm font-medium mb-2" htmlFor="email">
-              Name
-            </label>
-            <div className="flex gap-2">
+  return (
+    <div>
+      <div className='p-7 h-screen flex flex-col justify-between'>
+        <div>
+          <img className='w-16 mb-10' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYQy-OIkA6In0fTvVwZADPmFFibjmszu2A0g&s" alt="" />
+
+          <form onSubmit={(e) => {
+            submitHandler(e)
+          }}>
+
+            <h3 className='text-lg w-1/2  font-medium mb-2'>What's your name</h3>
+            <div className='flex gap-4 mb-7'>
               <input
-              id="firstname"
-              type="firstname"
-              required
-              value={firstname}
-              onChange={(e) => {
-                setFirstname(e.target.value);
+                required
+                className='bg-[#eeeeee] w-1/2 rounded-lg px-4 py-2 border  text-lg placeholder:text-base'
+                type="text"
+                placeholder='First name'
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value)
                 }}
-              placeholder="Shourya"
-              className="w-[50%] px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
-            />
-            <input
-              id="lastname"
-              type="lastname"
-              required
-              value={lastname}
-              onChange={(e) => {
-                setLastname(e.target.value);
+              />
+              <input
+                required
+                className='bg-[#eeeeee] w-1/2  rounded-lg px-4 py-2 border  text-lg placeholder:text-base'
+                type="text"
+                placeholder='Last name'
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value)
                 }}
-              placeholder="Sharma"
-              className="w-[50%] px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
-            />
+              />
             </div>
-          </div>
-          <div>
-            <label className="block text-black text-sm font-medium mb-2" htmlFor="email">
-              Email
-            </label>
+
+            <h3 className='text-lg font-medium mb-2'>What's your email</h3>
             <input
-              id="email"
-              type="email"
               required
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value);
-                }}
-              placeholder="shouryasharma@developer.com"
-              className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
+                setEmail(e.target.value)
+              }}
+              className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
+              type="email"
+              placeholder='email@example.com'
             />
-          </div>
-          <div>
-            <label className="block text-black text-sm font-medium mb-2" htmlFor="password"
-            >
-              Password
-            </label>
+
+            <h3 className='text-lg font-medium mb-2'>Enter Password</h3>
+
             <input
-              id="password"
-              type="password"
-              required
+              className='bg-[#eeeeee] mb-7 rounded-lg px-4 py-2 border w-full text-lg placeholder:text-base'
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value);
-                }}
-              placeholder="Enter password"
-              className="w-full px-4 py-2 rounded bg-gray-100 border border-gray-300 focus:outline-none focus:border-black transition"
+                setPassword(e.target.value)
+              }}
+              required type="password"
+              placeholder='password'
             />
-          </div>
-          <div id='vehicle'>
 
-          </div>
-          <button
-            type="submit"
-            className="w-full py-3 mt-4 rounded bg-black text-white font-semibold tracking-wider hover:bg-gray-900 transition"
-          >
-            Sign Up
-          </button>
-        </form>
-         <Link
-         to='/captain-signup'
-           >
-            <button  className="w-full py-3 mt-4 rounded bg-purple-800  text-white font-semibold tracking-wider hover:bg-gray-900 transition"
-            
-            >Signup as captain</button>
-          </Link>
-        <div className="mt-6 text-center text-gray-500 text-sm">
-          already a User?{' '}
-          <Link to='/login' className="underline cursor-pointer text-black hover:text-gray-700">
-            Login
-          </Link>
+            <button
+              className='bg-[#111] text-white font-semibold mb-3 rounded-lg px-4 py-2 w-full text-lg placeholder:text-base'
+            >Create account</button>
+
+          </form>
+          <p className='text-center'>Already have a account? <Link to='/login' className='text-blue-600'>Login here</Link></p>
+        </div>
+        <div>
+          <p className='text-[10px] leading-tight'>This site is protected by reCAPTCHA and the <span className='underline'>Google Privacy
+            Policy</span> and <span className='underline'>Terms of Service apply</span>.</p>
         </div>
       </div>
-    </div>
-  );
-};
+    </div >
+  )
+}
 
-export default UserSignup;
+export default UserSignup
