@@ -12,9 +12,9 @@ const LocationSearchPanel = (props) => {
   return (
     <div>
       {
-        location.map(function(elem){
+        location.map(function(elem, idx){
           return (
-            <div onClick={() => {
+            <div key={idx} onClick={() => {
               props.setVehiclePanel(true);
               props.setPanelOpen(false)
             }} className='border-b-4 py-3'>

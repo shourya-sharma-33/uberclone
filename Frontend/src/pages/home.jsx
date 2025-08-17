@@ -97,6 +97,9 @@ const Home = () => {
       </div>
 
       <div ref={vehiclePanelRef} className="fixed bottom-0 left-0 right-0 z-10 bg-white p-4 shadow-lg rounded-t-2xl translate-y-full rounded-xl">
+        <h4 className='p-3 text-center absolute top-0 right-[5px]' onClick={() => {
+          setVehiclePanel(false)
+        }}><i className="ri-arrow-down-wide-line"></i></h4>
         <h3 className='text-2xl font-semibold mb-3'>Choose a Vehicle</h3>
         <div className="flex items-center justify-between gap-4">
           <img
