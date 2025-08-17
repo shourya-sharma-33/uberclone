@@ -90,7 +90,7 @@ const Home = () => {
             />
           </form>
           <div className=" mt-10">
-            <LocationSearchPanel vehiclePanel={vehiclePanel} setVehiclePanel={setVehiclePanel}/>
+            <LocationSearchPanel vehiclePanel={vehiclePanel} setVehiclePanel={setVehiclePanel} setPanelOpen={setPanelOpen}/>
           </div>
         </div>
         
