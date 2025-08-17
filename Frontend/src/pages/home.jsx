@@ -76,11 +76,24 @@ const Home = () => {
             />
           </form>
           <div className=" mt-10">
-            <LocationSearchPanel/>
+            <LocationSearchPanel />
+            <LocationSearchPanel />
+            <LocationSearchPanel />
           </div>
         </div>
         
       </div>
+
+      <div className='fixed z-10 bottom-0'>
+          <div>
+            <img src="" alt="" />
+            <div>
+              <h4>UberGo <span><i className='ri-user-3-fill'></i>4</span></h4>
+              <h5></h5>
+            </div>
+          </div>
+      </div>
+
     </div>
   )
 }
