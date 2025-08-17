@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap } from "gsap";
 import LocationSearchPanel from '../components/LocationSearchPanel';
 import VehiclePanel from '../components/VehiclePanel';
+import ConfirmRide from '../components/ConfirmRide';
 
 const Home = () => {
   const [pickup, setPickup] = useState('')
@@ -11,9 +12,10 @@ const Home = () => {
   const [panelOpen, setPanelOpen] = useState(false)
   const panelRef = useRef(null)
   const panelCloseRef = useRef(null)
-  const vehiclePanelRef = useRef(false)
+  const vehiclePanelRef = useRef(null)
+  const confirmRidePanelRef = useRef(null)
   const [vehiclePanel, setVehiclePanel] = useState(false)
-
+  const [confirmRide, setConfirmRide] = useState(false)
   const submitHandler = (e) => {
     e.preventDefault()
   }
@@ -47,6 +49,18 @@ const Home = () => {
         transform: 'translateY(0)'
       })
     }else{
+      gsap.to(vehiclePanelRef.current, {
+        transform: 'translateY(100%)'
+      })
+    }
+  }, [vehiclePanel])
+
+  useGSAP(function () {
+    if (vehiclePanel) {
+      gsap.to(vehiclePanelRef.current, {
+        transform: 'translateY(0)'
+      })
+    } else {
       gsap.to(vehiclePanelRef.current, {
         transform: 'translateY(100%)'
       })
@@ -101,7 +115,9 @@ const Home = () => {
         <VehiclePanel setVehiclePanel={setVehiclePanel}/>
       </div>
 
-     
+      <div ref={confirmRidePanelRef} className="fixed bottom-0 left-0 right-0 z-10 bg-white p-4 shadow-lg rounded-t-2xl translate-y-full rounded-xl">
+        <ConfirmRide/>
+      </div>
 
     </div>
   )
