@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import Bgplaceholder from "../assets/placeholder.jpg"
 import { useGSAP } from '@gsap/react'
 import { gsap } from "gsap";
+import LocationSearchPanel from '../components/LocationSearchPanel';
 
 const Home = () => {
   const [pickup, setPickup] = useState('')
@@ -74,7 +75,9 @@ const Home = () => {
               onChange={(e) => setDestination(e.target.value)}
             />
           </form>
-          <div className="bg-black h-[80%] mt-10"></div>
+          <div className=" mt-10">
+            <LocationSearchPanel/>
+          </div>
         </div>
         
       </div>
