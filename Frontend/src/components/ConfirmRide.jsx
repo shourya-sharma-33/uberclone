@@ -16,7 +16,7 @@ const ConfirmRide = () => {
                   alt="Uber Car"
                   className="object-contain"
               />
-              <div className='w-full'>
+              <div className='w-full mt-5'>
                 <div className='flex items-center gap-5 p-3 border-b-2'>
                     <i className="ri-map-pin-user-fill"></i>
                     <div>
@@ -31,7 +31,7 @@ const ConfirmRide = () => {
                           <p className="text-sm -mt-1 text-gray-600">Kankariya Talab, Bhopal</p>
                       </div>
                 </div>
-                  <div className='flex items-center gap-5 p-3 border-b-2'>
+                  <div className='flex items-center gap-5 p-3 '>
                       <i className="ri-currency-line"></i>
                       <div>
                           <h3 className='text-lg font-medium'>562/11-A</h3>
@@ -39,7 +39,7 @@ const ConfirmRide = () => {
                       </div>
                 </div>
             </div>
-            <button className='w-full bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
+            <button className='w-full mt-5 bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
         </div>
     </div>
   )
