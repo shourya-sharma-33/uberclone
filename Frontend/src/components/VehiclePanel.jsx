@@ -7,7 +7,10 @@ const VehiclePanel = (props) => {
               props.setVehiclePanel(false)
           }}><i className="ri-arrow-down-wide-line"></i></h4>
           <h3 className='text-2xl font-semibold mb-3'>Choose a Vehicle</h3>
-          <div className="flex items-center justify-between gap-4">
+          <div onClick={() => {
+            props.setConfirmRidePanel(true)
+          }}
+           className="flex items-center justify-between gap-4">
               <img
                   src="https://toppng.com/public/uploads/preview/car-png-11545045307loxqxkku4n.png"
                   alt="Uber Car"
@@ -27,7 +30,10 @@ const VehiclePanel = (props) => {
                   <p className="text-xs text-gray-500">Affordable, compact rides</p>
               </div>
           </div>
-          <div className="flex items-center justify-between gap-4">
+          <div onClick={() => {
+              props.setConfirmRidePanel(true)
+          }}
+          className="flex items-center justify-between gap-4">
               <img
                   src="https://toppng.com/public/uploads/preview/car-png-11545045307loxqxkku4n.png"
                   alt="Uber Car"
@@ -49,7 +55,10 @@ const VehiclePanel = (props) => {
 
               {/* Comment for myself :3, come back and replace these images with uber auto png, uber car png, and uber auto png please ;3 */}
           </div>
-          <div className="flex items-center justify-between gap-4">
+          <div onClick={() => {
+              props.setConfirmRidePanel(true)
+          }}
+          className="flex items-center justify-between gap-4">
               <img
                   src="https://toppng.com/public/uploads/preview/car-png-11545045307loxqxkku4n.png"
                   alt="Uber Car"

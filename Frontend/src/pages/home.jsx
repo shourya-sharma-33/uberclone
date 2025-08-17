@@ -15,7 +15,7 @@ const Home = () => {
   const vehiclePanelRef = useRef(null)
   const confirmRidePanelRef = useRef(null)
   const [vehiclePanel, setVehiclePanel] = useState(false)
-  const [confirmRide, setConfirmRide] = useState(false)
+  const [confirmRidePanel, setConfirmRidePanel] = useState(false)
   const submitHandler = (e) => {
     e.preventDefault()
   }
@@ -56,16 +56,16 @@ const Home = () => {
   }, [vehiclePanel])
 
   useGSAP(function () {
-    if (vehiclePanel) {
-      gsap.to(vehiclePanelRef.current, {
+    if (confirmRidePanel) {
+      gsap.to(confirmRidePanelRef.current, {
         transform: 'translateY(0)'
       })
     } else {
-      gsap.to(vehiclePanelRef.current, {
+      gsap.to(confirmRidePanelRef.current, {
         transform: 'translateY(100%)'
       })
     }
-  }, [vehiclePanel])
+  }, [confirmRidePanel])
   return (
     <div className='overflow-y-hidden h-screen relative'>
       <img src="a8ysas" alt="Uber" className='w-16 absolute left-5 top-5' />
@@ -112,7 +112,7 @@ const Home = () => {
       </div>
 
       <div ref={vehiclePanelRef} className="fixed bottom-0 left-0 right-0 z-10 bg-white p-4 shadow-lg rounded-t-2xl translate-y-full rounded-xl">
-        <VehiclePanel setVehiclePanel={setVehiclePanel}/>
+        <VehiclePanel setConfirmRidePanel={setConfirmRidePanel} setVehiclePanel={setVehiclePanel}/>
       </div>
 
       <div ref={confirmRidePanelRef} className="fixed bottom-0 left-0 right-0 z-10 bg-white p-4 shadow-lg rounded-t-2xl translate-y-full rounded-xl">
