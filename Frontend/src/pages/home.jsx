@@ -25,7 +25,7 @@ const Home = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-  }
+  } 
 
   useGSAP(() => {
     if (panelOpen) {
