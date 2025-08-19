@@ -1,11 +1,12 @@
 import React from 'react'
 import Bg2 from '../assets/pl2.jpeg'
+import { Link } from 'react-router-dom'
 const Riding = () => {
     return (
         <div className='h-screen '>
-            <div className='fixed right-2 top-2 h-10 w-10 bg-white flex items-center justify-center rounded-full'>
+            <Link to='/' className='fixed right-2 top-2 h-10 w-10 bg-white flex items-center justify-center rounded-full'>
                 <i className="text-lg font-bold ri-home-5-line"></i>
-            </div>
+            </Link>
             <div className='h-1/2'>
                 <img src={Bg2} alt="" className='h-full w-full object-cover' />
             </div>
@@ -35,13 +36,7 @@ const Riding = () => {
                                 <p className="text-sm -mt-1 text-gray-600">Kankariya Talab, Bhopal</p>
                             </div>
                         </div>
-                        <div className='flex items-center gap-5 p-3 border-b-2'>
-                            <i className="text-lg ri-map-pin-2-fill"></i>
-                            <div>
-                                <h3 className='text-lg font-medium'>562/11-A</h3>
-                                <p className="text-sm -mt-1 text-gray-600">Kankariya Talab, Bhopal</p>
-                            </div>
-                        </div>
+                        
                         <div className='flex items-center gap-5 p-3 '>
                             <i className="ri-currency-line"></i>
                             <div>
