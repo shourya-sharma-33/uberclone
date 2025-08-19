@@ -3,6 +3,9 @@ import Bg2 from '../assets/pl2.jpeg'
 const Riding = () => {
     return (
         <div className='h-screen '>
+            <div className='fixed right-2 top-2 h-10 w-10 bg-white flex items-center justify-center rounded-full'>
+                <i className="text-lg font-bold ri-home-5-line"></i>
+            </div>
             <div className='h-1/2'>
                 <img src={Bg2} alt="" className='h-full w-full object-cover' />
             </div>
@@ -50,7 +53,7 @@ const Riding = () => {
                 </div>
                 <button
                  className='
-                    w-full bg-green-600 p-2 text-white
+                    w-full bg-green-600 p-2 text-white font-semibold
                  '
                 >Make a Payment</button>
 
