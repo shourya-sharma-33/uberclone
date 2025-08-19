@@ -8,14 +8,22 @@ const WaitForDriver = () => {
         }}>
             <i className='text-3xl text-gray-200 ri-arrow-down-wide-line'></i>
         </h5>
-        <h3 className="text-2xl font-semibold mb-5">Waiting</h3>
 
-        <div className='flex justify-between flex-col items-center'>
+        <div className='flex items-center justify-between'>
               <img
                   src="https://toppng.com/public/uploads/preview/car-png-11545045307loxqxkku4n.png"
                   alt="Uber Car"
-                  className="object-contain"
+                  className="object-contain w-28"
               />
+              <div className='text-right'>
+                <h2 className='text-lg font-medium '>Ramu</h2>
+                  <h4 className='text-2xl font-bold -mt-1 -mb-1'>M404 AB 1234</h4>
+                <p className='text-sm text-gray-500'>Maruti Shuzuzki Alto</p>
+              </div>
+        </div>
+        
+
+        <div className='flex justify-between flex-col items-center'>
               <div className='w-full mt-5'>
                 <div className='flex items-center gap-5 p-3 border-b-2'>
                     <i className="ri-map-pin-user-fill"></i>
@@ -39,7 +47,6 @@ const WaitForDriver = () => {
                       </div>
                 </div>
             </div>
-            <button className='w-full mt-5 bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
         </div>
     </div>
   )
