@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import LocationSearchPanel from '../components/LocationSearchPanel';
 import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide';
+import LookingForDriver from '../components/LookingForDriver';
 
 const Home = () => {
   const [pickup, setPickup] = useState('')
@@ -14,8 +15,11 @@ const Home = () => {
   const panelCloseRef = useRef(null)
   const vehiclePanelRef = useRef(null)
   const confirmRidePanelRef = useRef(null)
+  const vehicleFoundRef = useRef(null)
   const [vehiclePanel, setVehiclePanel] = useState(false)
   const [confirmRidePanel, setConfirmRidePanel] = useState(false)
+  const [vehicleFound, setVehicleFound] = useState(false)
+
   const submitHandler = (e) => {
     e.preventDefault()
   }
@@ -56,6 +60,18 @@ const Home = () => {
   }, [vehiclePanel])
 
   useGSAP(function () {
+    if (vehicleFound) {
+      gsap.to(vehicleFoundRef.current, {
+        transform: 'translateY(0)'
+      })
+    } else {
+      gsap.to(vehicleFoundRef.current, {
+        transform: 'translateY(100%)'
+      })
+    }
+  }, [vehicleFound])
+
+  useGSAP(function () {
     if (confirmRidePanel) {
       gsap.to(confirmRidePanelRef.current, {
         transform: 'translateY(0)'
@@ -81,7 +97,7 @@ const Home = () => {
         >
           <h5 ref={panelCloseRef}  className='absolute top-3 right-3 text-4xl opacity-0' onClick={() => {
             setPanelOpen(false)
-          }}>
+          }}> 
             <i className="ri-arrow-down-s-line"></i>
           </h5>
           <h4 className='text-3xl font-semibold m-2'>Find a Trip</h4>
@@ -116,9 +132,12 @@ const Home = () => {
       </div>
 
       <div ref={confirmRidePanelRef} className="fixed bottom-0 left-0 right-0 z-10 bg-white p-4 shadow-lg rounded-t-2xl translate-y-full rounded-xl">
-        <ConfirmRide/>
+        <ConfirmRide setConfirmRidePanel={setConfirmRidePanel} setVehicleFound={setVehicleFound}/>
       </div>
 
+      <div ref={vehicleFoundRef} className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12'>
+        <LookingForDriver/>
+      </div>
     </div>
   )
 }

@@ -1,14 +1,14 @@
 import React from 'react'
 
-const ConfirmRide = (props) => {
+const WaitForDriver = () => {
   return (
     <div>
         <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
-            props.setConfirmRidePanel(false)
+            props.setVehiclePanel(false)
         }}>
             <i className='text-3xl text-gray-200 ri-arrow-down-wide-line'></i>
         </h5>
-        <h3 className="text-2xl font-semibold mb-5">Confirm your Ride</h3>
+        <h3 className="text-2xl font-semibold mb-5">Waiting</h3>
 
         <div className='flex justify-between flex-col items-center'>
               <img
@@ -39,13 +39,10 @@ const ConfirmRide = (props) => {
                       </div>
                 </div>
             </div>
-            <button onClick={() => {
-                  props.setVehicleFound(true)
-                  props.setConfirmRidePanel(false)
-            }} className='w-full mt-5 bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
+            <button className='w-full mt-5 bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
         </div>
     </div>
   )
 }
 
-export default ConfirmRide
+export default WaitForDriver
