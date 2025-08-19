@@ -12,7 +12,7 @@ import UserLogout from './pages/UserLogout'
 import CaptainProtectWrapper from './pages/CaptainProtectWrapper'
 import CaptainHome from './pages/CaptainHome'
 import 'remixicon/fonts/remixicon.css';
-import Riding from './pages/Riding'
+import Riding from './pages/Riding.jsx'
 
 
 
