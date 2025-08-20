@@ -19,7 +19,7 @@ const CaptainHome = () => {
       <div className='h-1/4'>
         <CaptainDetails />
       </div>
-      <div className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+      <div className='fixed w-full z-10 bottom-0 translate-y-ful bg-white px-3 py-10 pt-12'>
         <RidePopUp />
       </div>
     </div>
