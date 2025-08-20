@@ -1,6 +1,6 @@
 import React from 'react'
 import placeholder1 from '../assets/placeholder (1).jpg'
-const RidePopUp = () => {
+const RidePopUp = (props) => {
     return (
         <div>
             <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
@@ -47,8 +47,12 @@ const RidePopUp = () => {
                     </div>
                 </div>
                 <button onClick={() => {
+                    props.setRidePopupPanel(false)
+                    props.setConfirmRidePopup(true)
+                    console.log("mepisfhihv")
                 }} className='w-full mt-5 bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
                 <button onClick={() => {
+                    props.setRidePopupPanel(false)
                 }} className='w-full mt-2 bg-gray-400 text-gray-700 font-semibold p-2 rounded-sm'>Cancel</button>
             </div>
         </div>
