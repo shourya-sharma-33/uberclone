@@ -11,10 +11,10 @@ const CaptainHome = () => {
           <i className="text-lg font-bold ri-logout-box-r-line"></i>
         </Link>
       </div>
-      <div className='h-2/3'>
+      <div className='h-3/4'>
         <img src={Bg2} alt="" className='h-full w-full object-cover' />
       </div>
-      <div className='h-1/3 p-6 flex flex-col gap-5'>
+      <div className='h-1/4 p-6 flex flex-col gap-5'>
         <div className='flex items-center justify-between gap-3'>
           <div className='flex items-center justify-between gap-2'>
             <img className='h-16 w-16 rounded-full' src={Bg2} alt="" />
