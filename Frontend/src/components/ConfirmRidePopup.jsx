@@ -1,5 +1,6 @@
 import React from 'react'
 import placeholder1 from '../assets/placeholder (1).jpg'
+import { Link } from 'react-router-dom'
 
 const ConfirmRidePopup = (props) => {
   return (
@@ -47,11 +48,21 @@ const ConfirmRidePopup = (props) => {
             </div>
           </div>
         </div>
-        <button onClick={() => {
-        }} className='w-full mt-5 bg-green-400 text-white font-semibold p-2 rounded-sm'>Confirm</button>
-        <button onClick={() => {
-          props.setConfirmRidePopup(false)
-        }} className='w-full mt-2 bg-gray-400 text-gray-700 font-semibold p-2 rounded-sm'>Cancel</button>
+
+        
+        <div className="mt-6 w-full">
+          <form onSubmit={(e) => {
+            submitHandler(e)
+          }}>
+            <input type="text" className="bg-[#eee] px-6 py-4 font-mono text-lg rounded-lg w-full mt-3" placeholder="Enter OTP" />
+            <Link to="/captain-riding" className="w-full mt-5 flex justify-center bg-green-600 text-white font-semibold p-3 rounded-lg">Confirm</Link>
+            <button onClick={() => {
+              props.setConfirmRidePopupPanel(false)
+              props.setRidePopupPanel(false)
+            }} className="w-full mt-1 bg-red-600 text-white font-semibold p-3 rounded-lg">Cancel</button>
+          </form>
+        </div>
+
       </div>
     </div>
   )
