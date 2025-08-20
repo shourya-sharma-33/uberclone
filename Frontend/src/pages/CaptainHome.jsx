@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import PlaceHolder from "../assets/pl2.jpeg"
 import Bg2 from "../assets/placeholder.jpg"
 import CaptainDetails from '../components/CaptainDetails'
+import RidePopUp from '../components/RidePopUp'
 const CaptainHome = () => {
   return (
     <div className='h-screen '>
@@ -16,7 +17,10 @@ const CaptainHome = () => {
         <img src={Bg2} alt="" className='h-full w-full object-cover' />
       </div>
       <div className='h-1/4'>
-        <CaptainDetails/>
+        <CaptainDetails />
+      </div>
+      <div className='fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+        <RidePopUp />
       </div>
     </div>
   )
