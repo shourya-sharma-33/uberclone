@@ -10,7 +10,10 @@ import { gsap } from "gsap";
 const CaptainHome = () => {
 
   const [ridePopUpPanel, setRidePopupPanel] = useState(false)
+
+  const [captainDetail, setCaptainDetail] = useState(true)
   const ridePopUpPanelRef = useRef()
+  const captainDetailRef = useRef()
   useGSAP(function () {
     if (ridePopUpPanel) {
       gsap.to(ridePopUpPanelRef.current, {
@@ -22,6 +25,19 @@ const CaptainHome = () => {
       })
     }
   }, [ridePopUpPanel])
+
+  useGSAP(function () {
+    if (captainDetail) {
+      gsap.to(captainDetailRef.current, {
+        transform: 'translateY(0)'
+      })
+    } else {
+      gsap.to(captainDetailRef.current, {
+        transform: 'translateY(100%)'
+      })
+    }
+  }, [captainDetail])
+
 
 
   return (
@@ -35,7 +51,7 @@ const CaptainHome = () => {
       <div className='h-3/4'>
         <img src={Bg2} alt="" className='h-full w-full object-cover' />
       </div>
-      <div className='h-1/4'>
+      <div ref={captainDetailRef} className='h-1/4'>
         <CaptainDetails />
       </div>
       <div ref={ridePopUpPanelRef} className='fixed w-full z-10 bottom-0 translate-y-ful bg-white px-3 py-10 pt-12'>
