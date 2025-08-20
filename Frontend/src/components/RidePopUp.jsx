@@ -9,13 +9,13 @@ const RidePopUp = () => {
                 <i className='text-3xl text-gray-200 ri-arrow-down-wide-line'></i>
             </h5>
             <h3 className="text-3xl font-semibold mb-5">New Ride Available</h3>
-            <div className='flex  items-center justify-between'>
-                <div className=' flex items-center gap-3'>
+            <div className='flex  items-center justify-between bg-yellow-300 py-4 px-5 rounded-lg'>
+                <div className=' flex items-center gap-3 '>
                     <img src={placeholder1} alt=""
-                        className='h-10 rounded-full object-cover w-12' />
+                        className='h-10 rounded-full object-cover w-10' />
                     <h2 className='text-lg font-medium'>Meow</h2>
                 </div>
-                <h5>2.2 <span className='font-bold'>Km</span></h5>
+                <h5 className='text-lg font-semibold'>2.2 KM</h5>
             </div>
             <div className='flex justify-between flex-col items-center'>
                 {/* <img
