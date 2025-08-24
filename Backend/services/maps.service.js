@@ -22,3 +22,41 @@ module.exports.getAddressCoordinate = async (address) => {
         throw error;
     }
 };
+
+module.exports.getDistanceTime = async (origin, destination) => {
+    if (!origin || !destination) {
+        throw new Error("Origin and destination are required");
+    }
+
+    const apiKey = process.env.GEOAPIFY_API_KEY;
+
+    // Clean up whitespace/newlines
+    const cleanOrigin = origin.trim();
+    const cleanDestination = destination.trim();
+
+    const url = `https://api.geoapify.com/v1/routing?waypoints=${encodeURIComponent(
+        cleanOrigin
+    )}|${encodeURIComponent(cleanDestination)}&mode=drive&apiKey=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        if (
+            response.data.features &&
+            response.data.features.length > 0
+        ) {
+            const route = response.data.features[0].properties;
+            return {
+                distance: route.distance,
+                time: route.time,
+                distance_km: (route.distance / 1000).toFixed(2),
+                time_minutes: Math.ceil(route.time / 60),
+            };
+        } else {
+            throw new Error("No route found");
+        }
+    } catch (error) {
+        console.error("Geoapify Routing API Error:", error.response?.data || error.message);
+        throw error;
+    }
+};
