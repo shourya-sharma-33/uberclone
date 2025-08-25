@@ -60,3 +60,29 @@ module.exports.getDistanceTime = async (origin, destination) => {
         throw error;
     }
 };
+
+module.exports.getAutoCompleteSuggestions = async (input) => {
+    if (!input) {
+        throw new Error("Query is required");
+    }
+
+    const apiKey = process.env.GEOAPIFY_API_KEY;
+    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(input)}&apiKey=${apiKey}`;
+
+    try {
+        const response = await axios.get(url);
+
+        // Geoapify returns data in features[] → extract formatted suggestions
+        if (response.data && response.data.features) {
+            const suggestions = response.data.features.map(
+                (feature) => feature.properties.formatted
+            );
+            return suggestions;
+        } else {
+            throw new Error("Unable to fetch suggestions");
+        }
+    } catch (error) {
+        console.error("Geoapify API Error:", error);
+        throw error;
+    }
+};
