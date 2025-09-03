@@ -52,3 +52,58 @@ module.exports.getAutoCompleteSuggestions = async (req, res, next) => {
             ) }
     }
 }
+
+> in ride.services
+
+
+module.exports.createRide = async ({ 
+    user, pickup, destination, vehicleType
+ }) => {
+    if (!user || !pickup || !destination || !vehicleType) {
+        throw new Error("all fields are required");
+    }
+
+    const ride = rideModel.create({
+        user,
+        pickup,
+        destination,
+        otp: getOtp(4),
+        fare : fare[vehicleType]
+    })
+
+    return ride;
+}
+
+> ridecontroller
+const rideServices = require('../services/ride.services');
+const { validateResult } = require('express-validator');
+module.exports.createRide = async (req, res) => {
+    const errors = validateResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({errors : errors.array});
+    }
+
+    try {
+        const ride = await rideServices.createRide(req.body);
+        return res.status(201).json(ride);
+    } catch (err) {
+        return res.status(400).json({message : err.message});
+    }
+}
+
+
+> ride routes
+
+const express = require('express');
+const router = express.Router();
+const { body } = require('express-validator')
+const rideController = require('../controllers/ride.controller');
+
+router.post('/create',
+    body('userId').isString().isLength({ min: 24, max: 24 }).withMessage('invalid user id'),
+    body('pickup').isString().isLength({ min: 3 }).withMessage('invalid pickup adress'),
+    body('destination').isString().isLength({min:3}).withMessage('invalid destination address'),
+    body('vehicleType').isString().isIn(['auto','car','motorcycle']).withMessage('invalid vehicletype'),
+    rideController.createRide
+
+)
